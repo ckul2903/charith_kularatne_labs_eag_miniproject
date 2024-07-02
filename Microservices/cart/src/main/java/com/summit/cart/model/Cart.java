@@ -2,24 +2,26 @@ package com.summit.cart.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.*;
 
 import java.util.List;
 
+@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "CART")
 public class Cart {
+
     private @Id String cartId;
+
     private String userId;
-    private List<String> lineItems;       //TODO: Implement a List to hold Product objects
 
-    public Cart(){}
+    @OneToMany(mappedBy = "cart")
+    private List<CartItem> cartItemList;
 
-    public Cart(String userId, List<String> lineItems){
-        this.userId = userId;
-        this.cartId = userId;   // Assuming each cart is assigned to one user
-        this.lineItems = lineItems;
-    }
-
-    public  void setLineItems(List<String> items){
-        this.lineItems = items;
-    }
 }
