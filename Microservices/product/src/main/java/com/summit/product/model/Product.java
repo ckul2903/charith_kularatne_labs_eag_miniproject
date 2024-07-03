@@ -2,8 +2,16 @@ package com.summit.product.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.*;
 
+@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "PRODUCT")
 public class Product {
 
     private @Id String itemId;
@@ -17,15 +25,4 @@ public class Product {
     private double price;
 
     private String brand;
-
-    public Product(){}
-
-    public Product(String itemId,String name, String description, String category, String brand, double price) {
-        this.itemId = itemId;
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.brand = brand;
-        this.price = price;
-    }
 }

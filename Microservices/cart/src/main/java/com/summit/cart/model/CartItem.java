@@ -1,18 +1,21 @@
 package com.summit.cart.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "CARTITEMS")
+@Table
 public class CartItem {
-
-    @ManyToOne
-    @JoinColumn(name = "cart_id",nullable = false)
-    private Cart cart;
 
     private @Id String itemId;
 
     private int quantity;
 
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
 }

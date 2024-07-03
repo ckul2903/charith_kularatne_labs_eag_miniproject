@@ -21,10 +21,6 @@ public class AbstractController {
         return sendResponse(response, HttpStatus.OK);
     }
 
-    protected <T> ResponseEntity<ResponseObject> sendSuccessResponse() {
-        return sendResponse("200", HttpStatus.OK);
-    }
-
     protected <T> ResponseEntity<ResponseObject> sendCreatedResponse(T response) {
         return sendResponse(response, HttpStatus.CREATED);
     }
@@ -37,7 +33,7 @@ public class AbstractController {
     @ExceptionHandler(value = CartNotFoundException.class)
     private ResponseEntity<ResponseObject> handler(CartNotFoundException exception){
         log.error("Exception occured: {}",exception.getMessage());
-        return sendResponse(exception.getMessage(),exception.getHttpCode());
+        return sendResponse(exception.getMessage(),HttpStatus.NOT_FOUND);
     }
 
     @ResponseBody

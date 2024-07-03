@@ -39,7 +39,6 @@ public class CartController extends AbstractController {
 
     @PutMapping("/{cartId}")
     ResponseEntity<ResponseObject> updateCart(@RequestBody CartDTO cartDto){
-        cartService.updateCart(cartDto);
-        return sendSuccessResponse(cartDto);
+        return sendSuccessResponse(cartService.updateCart(cartDto));
     }
 }

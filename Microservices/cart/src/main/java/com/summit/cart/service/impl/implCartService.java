@@ -26,7 +26,7 @@ public class implCartService implements CartService {
             log.info("CART SERVICE | Getting all carts");
             return cartRepository.findAll();
         } catch (Exception exception){
-            log.error("CART SERVICE | Couldn't get all carts : {}", exception);
+            log.error("CART SERVICE | Couldn't get all carts : {}", exception.getMessage());
             throw exception;
         }
     }
@@ -35,9 +35,10 @@ public class implCartService implements CartService {
         try {
             log.info("CART SERVICE | Creating new cart | ID:{}",cartDto.getCartId());
             Cart cart = modelMapper.map(cartDto,Cart.class);
+            cart.setUserId(cart.getCartId());   // ONE USER HAS ONE CART IN THIS CASE
             return cartRepository.save(cart);
         } catch (Exception exception) {
-            log.error("CART SERVICE | Create failed : {}",exception);
+            log.error("CART SERVICE | Create failed : {}",exception.getMessage());
             throw exception;
         }
     }
@@ -49,10 +50,10 @@ public class implCartService implements CartService {
                     ()-> new CartNotFoundException(cartId)
             );
         } catch (CartNotFoundException cartNotFoundException) {
-            log.error("CART SERVICE | Cart not found | Cart ID:{} failed with exception {}",cartId,cartNotFoundException);
+            log.error("CART SERVICE | Cart not found | Cart ID:{} failed with exception {}",cartId,cartNotFoundException.getMessage());
             throw cartNotFoundException;
         } catch (Exception exception){
-            log.error("CART SERVICE | Query failed | Cart ID:{} failed with exception {}",cartId,exception);
+            log.error("CART SERVICE | Query failed | Cart ID:{} failed with exception {}",cartId,exception.getMessage());
             throw  exception;
         }
     }
@@ -67,29 +68,31 @@ public class implCartService implements CartService {
                 throw new CartNotFoundException(cartId);
             }
         }catch (CartNotFoundException exception) {
-            log.error("CART SERVICE | Cart not found | Cart ID:{} failed with exception {}", cartId, exception);
+            log.error("CART SERVICE | Cart not found | Cart ID:{} failed with exception {}", cartId, exception.getMessage());
             throw exception;
         } catch (Exception exception) {
-            log.error("CART SERVICE | Delete failed | Cart ID:{} failed with exception{}", cartId, exception);
+            log.error("CART SERVICE | Delete failed | Cart ID:{} failed with exception{}", cartId, exception.getMessage());
             throw exception;
         }
     }
 
-    public void updateCart(CartDTO cartDto){
+    public Cart updateCart(CartDTO cartDto){
         try {
             log.info("CART SERVICE | Updating cart | ID:{}",cartDto.getCartId());
-            if (cartRepository.existsById(cartDto.getCartId())){
+            String cartId = cartDto.getCartId();
+            if (cartRepository.findById(cartId).isPresent()){
                 Cart cart = modelMapper.map(cartDto,Cart.class);
-                cartRepository.save(cart);
+                cart.setUserId(cartDto.getCartId());
+                return cartRepository.save(cart);
             }
             else {
                 throw new CartNotFoundException(cartDto.getCartId());
             }
         } catch (CartNotFoundException exception) {
-            log.error("CART SERVICE | Cart not found | Cart ID:{} failed with exception {}", cartDto.getCartId(), exception);
+            log.error("CART SERVICE | Cart not found | Cart ID:{} failed with exception {}", cartDto.getCartId(), exception.getMessage());
             throw exception;
         }catch (Exception exception) {
-            log.error("CART SERVICE | Update failed | Cart ID:{} failed with exception {}", cartDto.getCartId(), exception);
+            log.error("CART SERVICE | Update failed | Cart ID:{} failed with exception {}", cartDto.getCartId(), exception.getMessage());
             throw exception;
         }
     }
