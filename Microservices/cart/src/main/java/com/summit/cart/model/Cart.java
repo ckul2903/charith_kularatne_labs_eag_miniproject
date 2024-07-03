@@ -12,12 +12,18 @@ import java.util.List;
 @AllArgsConstructor
 @Table
 public class Cart {
+
+    @Column(name = "cart_id")
     private @Id String cartId;
 
     private String userId;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private List<CartItem> cartItemList;
+
+    public void addToCart(CartItem item){
+        cartItemList.add(item);
+    }
 
     @Override
     public String toString(){

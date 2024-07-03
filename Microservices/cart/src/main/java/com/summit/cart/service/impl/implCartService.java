@@ -3,6 +3,7 @@ package com.summit.cart.service.impl;
 import com.summit.cart.dto.exception.CartNotFoundException;
 import com.summit.cart.dto.request.CartDTO;
 import com.summit.cart.model.Cart;
+import com.summit.cart.model.CartItem;
 import com.summit.cart.repository.CartRepository;
 import com.summit.cart.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -80,8 +81,14 @@ public class implCartService implements CartService {
         try {
             log.info("CART SERVICE | Updating cart | ID:{}",cartDto.getCartId());
             String cartId = cartDto.getCartId();
+
             if (cartRepository.findById(cartId).isPresent()){
                 Cart cart = modelMapper.map(cartDto,Cart.class);
+                for(CartItem item : cartDto.getCartItemList()){
+                    item.setCart(cart);
+                    cart.addToCart(item);
+                }
+
                 cart.setUserId(cartDto.getCartId());
                 return cartRepository.save(cart);
             }
