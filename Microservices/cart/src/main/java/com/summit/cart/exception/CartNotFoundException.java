@@ -1,8 +1,7 @@
-package com.summit.cart.dto.exception;
+package com.summit.cart.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-
 
 @Getter
 public class CartNotFoundException extends RuntimeException{

@@ -1,4 +1,4 @@
-package com.summit.cart.dto.request;
+package com.summit.cart.dto;
 
 import com.summit.cart.model.CartItem;
 import lombok.Builder;

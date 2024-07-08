@@ -8,13 +8,13 @@ public interface ProductService {
 
     List<Product> getProducts();
 
-    Product getProductById(String itemId);
+    Product getProductById(String productId);
 
     Product addNewProduct(Product product);
 
-    void removeProduct(String itemId);
+    void removeProduct(String productId);
 
-    void updateProductDetails(String itemId);
+    Product updateProductDetails(Product product);
 
     List<String> getAllCategories();
 
