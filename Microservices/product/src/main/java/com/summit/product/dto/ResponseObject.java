@@ -1,6 +1,9 @@
-package com.summit.cart.dto.responses;
+package com.summit.product.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 @Setter

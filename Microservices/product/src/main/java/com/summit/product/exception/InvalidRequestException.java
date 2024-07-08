@@ -1,4 +1,4 @@
-package com.summit.cart.dto.exception;
+package com.summit.product.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

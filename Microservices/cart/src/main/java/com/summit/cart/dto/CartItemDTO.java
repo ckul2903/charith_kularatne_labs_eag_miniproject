@@ -1,5 +1,5 @@
 // NEEDED?
-package com.summit.cart.dto.request;
+package com.summit.cart.dto;
 
 import lombok.Builder;
 import lombok.Data;

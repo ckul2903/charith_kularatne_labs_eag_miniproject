@@ -1,7 +1,8 @@
 package com.summit.cart.service.impl;
 
-import com.summit.cart.dto.exception.CartNotFoundException;
-import com.summit.cart.dto.request.CartDTO;
+import com.summit.cart.exception.CartNotFoundException;
+import com.summit.cart.dto.CartDTO;
+import com.summit.cart.exception.GenericException;
 import com.summit.cart.model.Cart;
 import com.summit.cart.model.CartItem;
 import com.summit.cart.repository.CartRepository;
@@ -16,15 +17,16 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class implCartService implements CartService {
+public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
 
     private final ModelMapper modelMapper;
 
+    @Override
     public List<Cart> getCarts(){
+        log.info("CART SERVICE | Getting all carts");
         try {
-            log.info("CART SERVICE | Getting all carts");
             return cartRepository.findAll();
         } catch (Exception exception){
             log.error("CART SERVICE | Couldn't get all carts : {}", exception.getMessage());
@@ -32,9 +34,10 @@ public class implCartService implements CartService {
         }
     }
 
+    @Override
     public Cart createCart(CartDTO cartDto){
+        log.info("CART SERVICE | Creating new cart | ID:{}",cartDto.getCartId());
         try {
-            log.info("CART SERVICE | Creating new cart | ID:{}",cartDto.getCartId());
             Cart cart = modelMapper.map(cartDto,Cart.class);
             cart.setUserId(cart.getCartId());   // ONE USER HAS ONE CART IN THIS CASE
             return cartRepository.save(cart);
@@ -44,9 +47,10 @@ public class implCartService implements CartService {
         }
     }
 
+    @Override
     public Cart getCartById(String cartId){
+        log.info("CART SERVICE | Getting cart | ID:{}",cartId);
         try {
-            log.info("CART SERVICE | Getting cart | ID:{}",cartId);
             return cartRepository.findById(cartId).orElseThrow(
                     ()-> new CartNotFoundException(cartId)
             );
@@ -59,48 +63,41 @@ public class implCartService implements CartService {
         }
     }
 
+    @Override
     public void deleteCartById(String cartId){
+        log.info("CART SERVICE | Deleting cart | ID:{}",cartId);
         try {
-            log.info("CART SERVICE | Deleting cart | ID:{}",cartId);
-            if (cartRepository.existsById(cartId)){
-                cartRepository.deleteById(cartId);
-            }
-            else {
-                throw new CartNotFoundException(cartId);
-            }
-        }catch (CartNotFoundException exception) {
-            log.error("CART SERVICE | Cart not found | Cart ID:{} failed with exception {}", cartId, exception.getMessage());
-            throw exception;
+            cartRepository.deleteById(cartId);
+        }catch (CartNotFoundException cartNotFoundException) {
+            log.error("CART SERVICE | Cart not found | Cart ID:{} failed with exception {}", cartId, cartNotFoundException.getMessage());
+            throw cartNotFoundException;
         } catch (Exception exception) {
             log.error("CART SERVICE | Delete failed | Cart ID:{} failed with exception{}", cartId, exception.getMessage());
-            throw exception;
+            throw new GenericException();
         }
     }
 
-    public Cart updateCart(CartDTO cartDto){
+    @Override
+    public Cart updateCart(String cartId,CartDTO cartDto){
+        log.info("CART SERVICE | Updating cart | ID:{}",cartDto.getCartId());
         try {
-            log.info("CART SERVICE | Updating cart | ID:{}",cartDto.getCartId());
-            String cartId = cartDto.getCartId();
+            Cart cart = modelMapper.map(cartDto,Cart.class);
+            cart.setCartId(cartId);
+            cart.setUserId(cartId);
 
-            if (cartRepository.findById(cartId).isPresent()){
-                Cart cart = modelMapper.map(cartDto,Cart.class);
-                for(CartItem item : cartDto.getCartItemList()){
-                    item.setCart(cart);
-                    cart.addToCart(item);
-                }
+            for(CartItem item : cartDto.getCartItemList()){
+                item.setCart(cart);
+            }
 
-                cart.setUserId(cartDto.getCartId());
-                return cartRepository.save(cart);
-            }
-            else {
-                throw new CartNotFoundException(cartDto.getCartId());
-            }
-        } catch (CartNotFoundException exception) {
-            log.error("CART SERVICE | Cart not found | Cart ID:{} failed with exception {}", cartDto.getCartId(), exception.getMessage());
-            throw exception;
-        }catch (Exception exception) {
+            cart.setUserId(cartDto.getCartId());
+            return cartRepository.save(cart);
+
+        } catch (CartNotFoundException cartNotFoundException) {
+            log.error("CART SERVICE | Cart not found | Cart ID:{} failed with exception {}", cartDto.getCartId(), cartNotFoundException.getMessage());
+            throw cartNotFoundException;
+        }catch (Exception exception) { 
             log.error("CART SERVICE | Update failed | Cart ID:{} failed with exception {}", cartDto.getCartId(), exception.getMessage());
-            throw exception;
+            throw new GenericException();
         }
     }
 }

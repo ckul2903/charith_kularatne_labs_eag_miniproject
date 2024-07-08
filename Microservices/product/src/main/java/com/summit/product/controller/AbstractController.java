@@ -1,8 +1,9 @@
-package com.summit.cart.controller;
+package com.summit.product.controller;
 
-import com.summit.cart.exception.CartNotFoundException;
-import com.summit.cart.exception.InvalidRequestException;
-import com.summit.cart.dto.ResponseObject;
+import com.summit.product.exception.GenericException;
+import com.summit.product.exception.InvalidRequestException;
+import com.summit.product.exception.ProductNotFoundException;
+import com.summit.product.dto.ResponseObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +33,8 @@ public class AbstractController {
     }
 
     @ResponseBody
-    @ExceptionHandler(value = CartNotFoundException.class)
-    private ResponseEntity<ResponseObject> handler(CartNotFoundException exception){
+    @ExceptionHandler(value = ProductNotFoundException.class)
+    private ResponseEntity<ResponseObject> handler(ProductNotFoundException exception){
         log.error("Exception occured: {}",exception.getMessage());
         return sendResponse(exception.getMessage(),HttpStatus.NOT_FOUND);
     }
@@ -53,7 +54,7 @@ public class AbstractController {
     }
 
     @ResponseBody
-    @ExceptionHandler
+    @ExceptionHandler(value = GenericException.class)
     private ResponseEntity<ResponseObject> defaultHandler(Exception exception){
         log.error("Exception occured: {}",exception.getMessage());
         return sendResponse(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);

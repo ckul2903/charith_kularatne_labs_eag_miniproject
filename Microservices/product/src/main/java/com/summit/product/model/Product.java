@@ -11,10 +11,10 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PRODUCT")
+@Table
 public class Product {
 
-    private @Id String itemId;
+    private @Id String productId;
 
     private String name;
 

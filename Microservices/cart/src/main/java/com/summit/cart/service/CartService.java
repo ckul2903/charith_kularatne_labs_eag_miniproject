@@ -1,6 +1,6 @@
 package com.summit.cart.service;
 
-import com.summit.cart.dto.request.CartDTO;
+import com.summit.cart.dto.CartDTO;
 import com.summit.cart.model.Cart;
 
 import java.util.List;
@@ -15,5 +15,5 @@ public interface CartService {
 
     void deleteCartById(String cartId);
 
-    Cart updateCart(CartDTO cartDto);
+    Cart updateCart(String cartId, CartDTO cartDto);
 }
