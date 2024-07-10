@@ -23,19 +23,19 @@ public class ProductController extends AbstractController{
         return sendCreatedResponse(productService.addNewProduct(product));
     }
 
-    @GetMapping("products/{itemId}")
-    ResponseEntity<ResponseObject> getProductById(@PathVariable String itemId){
-        return sendSuccessResponse(productService.getProductById(itemId));
+    @GetMapping("products/{productId}")
+    ResponseEntity<ResponseObject> getProductById(@PathVariable String productId){
+        return sendSuccessResponse(productService.getProductById(productId));
     }
 
-    @PutMapping("products/{itemId}")
+    @PutMapping("products/{productId}")
     ResponseEntity<ResponseObject> updateProduct(@RequestBody Product product){
         return sendSuccessResponse(productService.updateProductDetails(product));
     }
 
-    @DeleteMapping("products/{itemId}")
-    ResponseEntity<ResponseObject> deleteProduct(@PathVariable String itemId){
-        productService.removeProduct(itemId);
+    @DeleteMapping("products/{productId}")
+    ResponseEntity<ResponseObject> deleteProduct(@PathVariable String productId){
+        productService.removeProduct(productId);
         return sendNoContentResponse();
     }
 

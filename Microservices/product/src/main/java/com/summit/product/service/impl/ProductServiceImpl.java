@@ -32,17 +32,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(String itemId) {
-        log.info("PRODUCT SERVICE | Getting product {}",itemId);
+    public Product getProductById(String productId) {
+        log.info("PRODUCT SERVICE | Getting product {}",productId);
         try {
-            return productRepository.findById(itemId).orElseThrow(
-                    ()-> new ProductNotFoundException(itemId)
+            return productRepository.findById(productId).orElseThrow(
+                    ()-> new ProductNotFoundException(productId)
             );
         }catch (ProductNotFoundException productNotFoundException){
             log.error("PRODUCT SERVICE | PRODUCT NOT FOUND");
             throw productNotFoundException;
         }catch (Exception exception){
-            log.error("PRODUCT SERVICE | Query failed | Product ID:{} failed with exception {}",itemId,exception.getMessage());
+            log.error("PRODUCT SERVICE | Query failed | Product ID:{} failed with exception {}",productId,exception.getMessage());
             throw new GenericException();
         }
     }
@@ -59,12 +59,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void removeProduct(String itemId) {
-        log.info("PRODUCT SERVICE | Deleting product {}",itemId);
+    public void removeProduct(String productId) {
+        log.info("PRODUCT SERVICE | Deleting product {}",productId);
         try{
-            productRepository.deleteById(itemId);
+            productRepository.deleteById(productId);
         } catch (Exception exception){
-            log.error("CART SERVICE | Delete failed | Product ID:{} failed with exception {}",itemId,exception.getMessage());
+            log.error("CART SERVICE | Delete failed | Product ID:{} failed with exception {}",productId,exception.getMessage());
             throw new GenericException();
         }
     }
