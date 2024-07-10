@@ -16,6 +16,7 @@ public class Cart {
     @Column(name = "cart_id")
     private @Id String cartId;
 
+    @Column(name = "user_id")
     private String userId;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)

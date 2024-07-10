@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres
+    container_name: summit-ecommerce
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=summit-db
+    ports:
+      - "5432:5432"
