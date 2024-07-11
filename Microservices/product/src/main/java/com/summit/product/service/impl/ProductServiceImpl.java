@@ -49,9 +49,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product addNewProduct(Product product) {
-        log.info("PRODUCT SERVICE | Creating product {}",product.getProductId());
         try {
-            return productRepository.save(product);
+            Product newProduct = productRepository.save(product);
+            log.info("PRODUCT SERVICE | Created product {}",product.getProductId());
+            return newProduct;
         } catch (Exception exception){
             log.error("PRODUCT SERVICE | Create failed | Product ID:{} failed with exception {}",product.getProductId(),exception.getMessage());
             throw new GenericException();

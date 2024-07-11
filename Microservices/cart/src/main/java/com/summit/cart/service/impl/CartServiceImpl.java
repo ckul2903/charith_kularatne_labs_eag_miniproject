@@ -36,11 +36,12 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart createCart(CartDTO cartDto){
-        log.info("CART SERVICE | Creating new cart | ID:{}",cartDto.getCartId());
         try {
             Cart cart = modelMapper.map(cartDto,Cart.class);
             cart.setUserId(cart.getCartId());   // ONE USER HAS ONE CART IN THIS CASE
-            return cartRepository.save(cart);
+            Cart newCart = cartRepository.save(cart);
+            log.info("CART SERVICE | Created new cart | ID:{}",cartDto.getCartId());
+            return newCart;
         } catch (Exception exception) {
             log.error("CART SERVICE | Create failed : {}",exception.getMessage());
             throw exception;
