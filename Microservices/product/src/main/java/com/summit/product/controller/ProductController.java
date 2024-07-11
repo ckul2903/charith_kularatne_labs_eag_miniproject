@@ -41,6 +41,6 @@ public class ProductController extends AbstractController{
 
     @GetMapping("products/categories")
     ResponseEntity<ResponseObject> getAllCategories(){
-        return sendSuccessResponse(productService.getAllCategories());
+        return sendSuccessResponse(productService.getAllProductCategories());
     }
 }
