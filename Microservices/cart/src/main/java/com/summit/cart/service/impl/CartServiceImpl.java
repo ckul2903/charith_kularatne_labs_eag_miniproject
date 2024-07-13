@@ -2,7 +2,7 @@ package com.summit.cart.service.impl;
 
 import com.summit.cart.exception.CartNotFoundException;
 import com.summit.cart.dto.CartDTO;
-import com.summit.cart.exception.GenericException;
+import com.summit.cart.exception.CartException;
 import com.summit.cart.model.Cart;
 import com.summit.cart.model.CartItem;
 import com.summit.cart.repository.CartRepository;
@@ -74,7 +74,7 @@ public class CartServiceImpl implements CartService {
             throw cartNotFoundException;
         } catch (Exception exception) {
             log.error("CART SERVICE | Delete failed | Cart ID:{} failed with exception{}", cartId, exception.getMessage());
-            throw new GenericException();
+            throw new CartException();
         }
     }
 
@@ -98,7 +98,7 @@ public class CartServiceImpl implements CartService {
             throw cartNotFoundException;
         }catch (Exception exception) { 
             log.error("CART SERVICE | Update failed | Cart ID:{} failed with exception {}", cartDto.getCartId(), exception.getMessage());
-            throw new GenericException();
+            throw new CartException();
         }
     }
 }
