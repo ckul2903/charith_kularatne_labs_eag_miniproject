@@ -16,6 +16,6 @@ public interface ProductService {
 
     Product updateProductDetails(Product product);
 
-    List<String> getAllCategories();
+    List<String> getAllProductCategories();
 
 }

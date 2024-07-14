@@ -85,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<String> getAllCategories() {
+    public List<String> getAllProductCategories() {
         try {
             List<String> categories = new ArrayList<>();
             for(Product product : getProducts()){
