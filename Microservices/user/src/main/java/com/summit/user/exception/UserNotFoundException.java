@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class UserNotFoundException extends RuntimeException{
+public class UserNotFoundException extends UserException{
 
     private final HttpStatus httpCode = HttpStatus.NOT_FOUND;
 

@@ -1,7 +1,7 @@
 package com.summit.user.controller;
 
 import com.summit.user.dto.ResponseObject;
-import com.summit.user.exception.GenericException;
+import com.summit.user.exception.UserException;
 import com.summit.user.exception.InvalidRequestException;
 import com.summit.user.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +54,7 @@ public class AbstractController {
     }
 
     @ResponseBody
-    @ExceptionHandler(value = GenericException.class)
+    @ExceptionHandler(value = UserException.class)
     private ResponseEntity<ResponseObject> defaultHandler(Exception exception){
         log.error("Exception occured: {}",exception.getMessage());
         return sendResponse(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);

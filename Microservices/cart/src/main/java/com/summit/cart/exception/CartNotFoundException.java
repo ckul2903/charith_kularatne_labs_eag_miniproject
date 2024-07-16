@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 
 public class CartNotFoundException extends CartException {
 
+    HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+
     public CartNotFoundException(String cartId){
-        throw new CartException("Cart not found", HttpStatus.NOT_FOUND);
+        throw new CartException("Cart not found");
     }
 
 }
