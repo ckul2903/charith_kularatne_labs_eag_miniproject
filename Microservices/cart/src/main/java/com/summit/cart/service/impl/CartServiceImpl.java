@@ -30,7 +30,7 @@ public class CartServiceImpl implements CartService {
             return cartRepository.findAll();
         } catch (Exception exception){
             log.error("CART SERVICE | Couldn't get all carts : {}", exception.getMessage());
-            throw exception;
+            throw new CartException();
         }
     }
 
@@ -44,7 +44,7 @@ public class CartServiceImpl implements CartService {
             return newCart;
         } catch (Exception exception) {
             log.error("CART SERVICE | Create failed : {}",exception.getMessage());
-            throw exception;
+            throw new CartException();
         }
     }
 
@@ -60,7 +60,7 @@ public class CartServiceImpl implements CartService {
             throw cartNotFoundException;
         } catch (Exception exception){
             log.error("CART SERVICE | Query failed | Cart ID:{} failed with exception {}",cartId,exception.getMessage());
-            throw  exception;
+            throw new CartException();
         }
     }
 

@@ -1,6 +1,6 @@
 package com.summit.user.service.impl;
 
-import com.summit.user.exception.GenericException;
+import com.summit.user.exception.UserException;
 import com.summit.user.exception.UserNotFoundException;
 import com.summit.user.model.UserEntity;
 import com.summit.user.repository.UserRepository;
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
             return userRepository.findAll();
         } catch (Exception exception){
             log.error("PRODUCT SERVICE | Failed with exception : {}", exception.getMessage());
-            throw new GenericException();
+            throw new UserException();
         }
     }
 
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
             throw userNotFoundException;
         }catch (Exception exception){
             log.error("PRODUCT SERVICE | Query failed | User ID:{} failed with exception {}",userId,exception.getMessage());
-            throw new GenericException();
+            throw new UserException();
         }
     }
 
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
             return newUser;
         } catch (Exception exception){
             log.error("PRODUCT SERVICE | Create failed | User ID:{} failed with exception {}",user.getUserId(),exception.getMessage());
-            throw new GenericException();
+            throw new UserException();
         }
     }
 
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
             userRepository.deleteById(userId);
         } catch (Exception exception){
             log.error("CART SERVICE | Delete failed | User ID:{} failed with exception {}",userId,exception.getMessage());
-            throw new GenericException();
+            throw new UserException();
         }
     }
 
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
             throw userNotFoundException;
         }catch (Exception exception){
             log.error("PRODUCT SERVICE | Update failed | User ID:{} failed with exception {}",user.getUserId(),exception.getMessage());
-            throw new GenericException();
+            throw new UserException();
         }
     }
 }

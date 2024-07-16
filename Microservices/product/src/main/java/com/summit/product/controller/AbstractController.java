@@ -1,6 +1,6 @@
 package com.summit.product.controller;
 
-import com.summit.product.exception.GenericException;
+import com.summit.product.exception.ProductException;
 import com.summit.product.exception.InvalidRequestException;
 import com.summit.product.exception.ProductNotFoundException;
 import com.summit.product.dto.ResponseObject;
@@ -54,7 +54,7 @@ public class AbstractController {
     }
 
     @ResponseBody
-    @ExceptionHandler(value = GenericException.class)
+    @ExceptionHandler(value = ProductException.class)
     private ResponseEntity<ResponseObject> defaultHandler(Exception exception){
         log.error("Exception occured: {}",exception.getMessage());
         return sendResponse(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
