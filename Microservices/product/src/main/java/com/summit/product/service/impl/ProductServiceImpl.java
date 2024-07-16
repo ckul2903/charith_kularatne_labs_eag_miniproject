@@ -1,6 +1,6 @@
 package com.summit.product.service.impl;
 
-import com.summit.product.exception.GenericException;
+import com.summit.product.exception.ProductException;
 import com.summit.product.exception.ProductNotFoundException;
 import com.summit.product.model.Product;
 import com.summit.product.repository.ProductRepository;
@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
             return productRepository.findAll();
         } catch (Exception exception){
             log.error("PRODUCT SERVICE | Failed with exception : {}", exception.getMessage());
-            throw new GenericException();
+            throw new ProductException();
         }
     }
 
@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
             throw productNotFoundException;
         }catch (Exception exception){
             log.error("PRODUCT SERVICE | Query failed | Product ID:{} failed with exception {}",productId,exception.getMessage());
-            throw new GenericException();
+            throw new ProductException();
         }
     }
 
@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
             return newProduct;
         } catch (Exception exception){
             log.error("PRODUCT SERVICE | Create failed | Product ID:{} failed with exception {}",product.getProductId(),exception.getMessage());
-            throw new GenericException();
+            throw new ProductException();
         }
     }
 
@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
             productRepository.deleteById(productId);
         } catch (Exception exception){
             log.error("CART SERVICE | Delete failed | Product ID:{} failed with exception {}",productId,exception.getMessage());
-            throw new GenericException();
+            throw new ProductException();
         }
     }
 
@@ -80,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
             throw productNotFoundException;
         }catch (Exception exception){
             log.error("PRODUCT SERVICE | Update failed | Product ID:{} failed with exception {}",product.getProductId(),exception.getMessage());
-            throw new GenericException();
+            throw new ProductException();
         }
     }
 
@@ -94,7 +94,7 @@ public class ProductServiceImpl implements ProductService {
             return categories;
         } catch (Exception exception) {
             log.error("PRODUCT SERVICE | Query failed | failed with exception {}",exception.getMessage());
-            throw new GenericException();
+            throw new ProductException();
         }
     }
 }

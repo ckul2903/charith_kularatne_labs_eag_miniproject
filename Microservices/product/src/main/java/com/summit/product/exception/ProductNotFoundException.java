@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class ProductNotFoundException extends RuntimeException{
+public class ProductNotFoundException extends ProductException{
 
     private final HttpStatus httpCode = HttpStatus.NOT_FOUND;
 

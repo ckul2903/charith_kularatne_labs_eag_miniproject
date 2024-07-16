@@ -1,13 +1,18 @@
-package com.summit.product.exception;
+package com.summit.user.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class GenericException extends RuntimeException{
+public class UserException extends RuntimeException{
+
     private final HttpStatus httpCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
-    public GenericException(){
+    public UserException(){
         super("Exception occurred : Internal server error");
+    }
+
+    public UserException(String message){
+        super(message);
     }
 }
