@@ -13,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
-public class User {
+public class UserEntity {
 
     @Column(name = "user_id")
     private @Id String userId;
