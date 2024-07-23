@@ -1,21 +1,26 @@
 const express = require('express');
 const axios = require('axios');
+const baseUrl = require('../constants/constants');
+const cartController = require('../controller/cartController')
 
-const cartRouter = express.Router();
+class CartRouter{
+    constructor(){
+        this.router = express.Router();
+        this.controller = new cartController();
+        this.initializeRoutes();
+    }
+    
+    initializeRoutes(){
+    this.router.get('/', this.controller.getCarts);
+    this.router.post('/', this.controller.createCart);
+    this.router.get('/:id', this.controller.getCartById);
+    this.router.delete('/:id', this.controller.deleteCartById);
+    this.router.patch('/:id', this.controller.updateCart);
+    }
 
-cartRouter.get( '/', 
-    async (req,res) => {
-        let cartData;
-        cartData = await axios.get('http://localhost:8080/api/v1/carts')
-        .then((response) => {
-            return response.data.data;
-        })
-        .catch((error) => {
-            console.error('Error fetching cart data:', error);
-            return Promise.reject({error:"error"});
-        });
+    getRouter(){
+        return this.router;
+    }
+}
 
-        res.send(cartData);
-    });
-
-module.exports = cartRouter;
+module.exports = CartRouter;
