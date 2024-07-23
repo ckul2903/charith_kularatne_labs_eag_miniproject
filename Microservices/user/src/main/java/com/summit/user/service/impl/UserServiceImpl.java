@@ -2,7 +2,7 @@ package com.summit.user.service.impl;
 
 import com.summit.user.exception.UserException;
 import com.summit.user.exception.UserNotFoundException;
-import com.summit.user.model.User;
+import com.summit.user.model.UserEntity;
 import com.summit.user.repository.UserRepository;
 import com.summit.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> getUsers() {
+    public List<UserEntity> getUsers() {
         try{
             log.info("PRODUCT SERVICE | Listing all users");
             return userRepository.findAll();
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(String userId) {
+    public UserEntity getUserById(String userId) {
         log.info("PRODUCT SERVICE | Getting user {}",userId);
         try {
             return userRepository.findById(userId).orElseThrow(
@@ -47,9 +47,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addNewUser(User user) {
+    public UserEntity addNewUser(UserEntity user) {
         try {
-            User newUser = userRepository.save(user);
+            UserEntity newUser = userRepository.save(user);
             log.info("PRODUCT SERVICE | Created user {}",user.getUserId());
             return newUser;
         } catch (Exception exception){
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserDetails(User user) {
+    public UserEntity updateUserDetails(UserEntity user) {
         log.info("PRODUCT SERVICE | Updating user {}",user.getUserId());
         try {
                 return userRepository.save(user);

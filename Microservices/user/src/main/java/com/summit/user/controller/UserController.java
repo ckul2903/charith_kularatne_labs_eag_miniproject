@@ -1,7 +1,7 @@
 package com.summit.user.controller;
 
 import com.summit.user.dto.ResponseObject;
-import com.summit.user.model.User;
+import com.summit.user.model.UserEntity;
 import com.summit.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class UserController extends AbstractController{
     }
 
     @PostMapping("users")
-    ResponseEntity<ResponseObject> createUser(@RequestBody User user){
+    ResponseEntity<ResponseObject> createUser(@RequestBody UserEntity user){
         return sendCreatedResponse(userService.addNewUser(user));
     }
 
@@ -29,7 +29,7 @@ public class UserController extends AbstractController{
     }
 
     @PutMapping("users/{userId}")
-    ResponseEntity<ResponseObject> updateUser(@RequestBody User user){
+    ResponseEntity<ResponseObject> updateUser(@RequestBody UserEntity user){
         return sendSuccessResponse(userService.updateUserDetails(user));
     }
 

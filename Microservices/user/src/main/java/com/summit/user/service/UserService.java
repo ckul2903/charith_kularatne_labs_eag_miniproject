@@ -1,19 +1,19 @@
 package com.summit.user.service;
 
-import com.summit.user.model.User;
+import com.summit.user.model.UserEntity;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> getUsers();
+    List<UserEntity> getUsers();
 
-    User getUserById(String userId);
+    UserEntity getUserById(String userId);
 
-    User addNewUser(User user);
+    UserEntity addNewUser(UserEntity user);
 
     void removeUser(String userId);
 
-    User updateUserDetails(User user);
+    UserEntity updateUserDetails(UserEntity user);
 
 }
