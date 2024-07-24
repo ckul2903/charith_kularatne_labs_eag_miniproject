@@ -1,4 +1,5 @@
 const errorResponses = require('../exception/errorResponses');
+const logger = require('../config/logger');
 const CartService = require('../service/cartService')
 
 const cartService = new CartService();
@@ -9,7 +10,7 @@ class CartController{
             const carts = await cartService.getCarts();
             res.status(200).json(carts)
         } catch (error) {
-            console.log("caught error | controller | get");
+            logger.error("Cart controller | Exception occured: ",error.cause);
             res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
         }
     }
@@ -19,7 +20,7 @@ class CartController{
             const newCart = await cartService.createCart(req.body);
             res.status(201).json(newCart);
         } catch(error){
-            console.log("caught error | controller | post");
+            logger.error("Cart controller | Exception occured: ",error.cause);
             res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
         }
     }
@@ -29,7 +30,7 @@ class CartController{
             const cart = await cartService.getCartById(req.params.id);
             res.status(200).json(cart);
         } catch(error){
-            console.log("caught error | controller | get id",error);
+            logger.error("Cart controller | Exception occured: ",error.cause);
             res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
         }
     }
@@ -39,7 +40,7 @@ class CartController{
             await cartService.deleteCartById(req.params.id);
             res.status(204).json();
         } catch(error){
-            console.log("caught error | controller | delete id",error);
+            logger.error("Cart controller | Exception occured: ",error.cause);
             res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
         }
     }
@@ -49,7 +50,7 @@ class CartController{
             const newCart = await cartService.updateCart(req.params.id,req.body);
             res.status(200).json(newCart);
         } catch(error){
-            console.log("caught error | controller | patch");
+            logger.error("Cart controller | Exception occured: ",error.cause);
             res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
         }
     }

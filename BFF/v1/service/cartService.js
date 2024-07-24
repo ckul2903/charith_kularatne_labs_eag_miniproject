@@ -1,4 +1,5 @@
 const axios = require('axios');
+const logger = require('../config/logger');
 const { response } = require('express');
 const { baseUrl } = require('../constants/constants')
 
@@ -6,11 +7,11 @@ class CartService{
     async getCarts(){
         return await axios.get(`${baseUrl}/carts`)
         .then((response) => {
-            console.log("recieved data from peer");
+            logger.info("Cart service | Got cart details");
             return response.data;
         })
         .catch((error)=>{
-            console.error("service | error | get");
+            logger.error("Cart service | Exception occured: ",error.cause);
             throw error;
         });
     }
@@ -18,11 +19,11 @@ class CartService{
     async createCart(cart){
         return await axios.post(`${baseUrl}/carts`,cart)
         .then((response) => {
-            console.log("created entry");
+            logger.info("Cart service | Created cart");
             return response.data;
         })
         .catch((error)=>{
-            console.error("service | error | create");
+            logger.error("Cart service | Exception occured: ",error.cause);
             throw error;
         });
     }
@@ -30,22 +31,22 @@ class CartService{
     async getCartById(cartId){
         return await axios.get(`${baseUrl}/carts/${cartId}`)
         .then((response)=>{
-            console.log("received data from peer");
+            logger.info("Cart service | Got cart details");
             return response.data;
         })
         .catch((error)=>{
             switch (error.status) {
                 case 404:
-                    console.error("NOT FOUND");
+                    logger.error("NOT FOUND");
                     break;
                 case 400:
-                    console.error("BAD REQUEST");
+                    logger.error("BAD REQUEST");
                     break
                 default:
-                    console.error("INTERNAL ERROR");
+                    logger.error("INTERNAL ERROR");
                     break;
             }
-            console.error("service | error | get by id");
+            logger.error("Cart service | Exception occured: ",error.cause);
             throw error;
         });
     }
@@ -53,11 +54,11 @@ class CartService{
     async deleteCartById(cartId){
         return await axios.delete(`${baseUrl}/carts/${cartId}`)
         .then((response)=>{
-            console.log("delete successful");
+            logger.info("Cart service | Successfully deleted");
             return response.data;
         })
         .catch((error)=>{
-            console.error("service | error | delete by id");
+            logger.error("Cart service | Exception occured: ",error.cause);
             throw error;
         });
     }
@@ -65,11 +66,11 @@ class CartService{
     async updateCart(cartId, cartContents){
         return await axios.patch(`${baseUrl}/carts/${cartId}`,cartContents)
         .then((response)=>{
-            console.log("delete successful");
+            logger.info("Cart service | Successfully updated");
             return response.data;
         })
         .catch((error)=>{
-            console.error("service | error | delete by id");
+            logger.error("Cart service | Exception occured: ",error.cause);
             throw error;
         });
     }
