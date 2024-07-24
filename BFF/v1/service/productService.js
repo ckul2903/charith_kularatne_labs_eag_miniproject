@@ -1,4 +1,5 @@
 const axios = require('axios');
+const logger = require('../config/logger');
 const { response } = require('express');
 const { baseUrl } = require('../constants/constants')
 
@@ -6,11 +7,11 @@ class ProductService{
     async getProducts(){
         return await axios.get(`${baseUrl}/products`)
         .then((response) => {
-            console.log("recieved data from peer");
+            logger.info("Product service | Got product details");
             return response.data;
         })
         .catch((error)=>{
-            console.error("service | error | get");
+            logger.error("Product service | Exception occured: ",error.cause);
             throw error;
         });
     }
@@ -18,11 +19,11 @@ class ProductService{
     async addNewProduct(product){
         return await axios.post(`${baseUrl}/products`,product)
         .then((response) => {
-            console.log("created entry");
+            logger.info("Product service | Created product");
             return response.data;
         })
         .catch((error)=>{
-            console.error("service | error | create");
+            logger.error("Product service | Exception occured: ",error.cause);
             throw error;
         });
     }
@@ -30,11 +31,11 @@ class ProductService{
     async getProductById(productId){
         return await axios.get(`${baseUrl}/products/${productId}`)
         .then((response)=>{
-            console.log("received data from peer");
+            logger.info("Product service | Got product details");
             return response.data;
         })
         .catch((error)=>{
-            console.error("service | error | get by id");
+            logger.error("Product service | Exception occured: ",error.cause);
             throw error;
         });
     }
@@ -42,11 +43,11 @@ class ProductService{
     async removeProduct(productId){
         return await axios.delete(`${baseUrl}/products/${productId}`)
         .then((response)=>{
-            console.log("delete successful");
+            logger.info("Product service | Successfully deleted");
             return response.data;
         })
         .catch((error)=>{
-            console.error("service | error | delete by id");
+            logger.error("Product service | Exception occured: ",error.cause);
             throw error;
         });
     }
@@ -55,11 +56,11 @@ class ProductService{
         productId = product.productId
         return await axios.patch(`${baseUrl}/products/${productId}`,product)
         .then((response)=>{
-            console.log("delete successful");
+            logger.info("Product service | Successfully deleted");
             return response.data;
         })
         .catch((error)=>{
-            console.error("service | error | delete by id");
+            logger.error("Product service | Exception occured: ",error.cause);
             throw error;
         });
     }
@@ -67,11 +68,11 @@ class ProductService{
     async getProductCategories(){
         return await axios.get(`${baseUrl}/products/categories`)
         .then((response) => {
-            console.log("recieved data from peer");
+            logger.info("recieved data from peer");
             return response.data;
         })
         .catch((error)=>{
-            console.error("service | error | get");
+            logger.error("Product service | Exception occured: ",error.cause);
             throw error;
         });
     }
