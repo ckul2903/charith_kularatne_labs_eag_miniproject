@@ -1,9 +1,9 @@
-const express = require('express');
-const userController = require('../controller/userController')
+import { Router } from 'express';
+import userController from '../controller/userController.js';
 
 class UserRouter{
     constructor(){
-        this.router = express.Router();
+        this.router = Router();
         this.controller = new userController();
         this.initializeRoutes();
     }
@@ -21,4 +21,4 @@ class UserRouter{
     }
 }
 
-module.exports = UserRouter;
+export default UserRouter;

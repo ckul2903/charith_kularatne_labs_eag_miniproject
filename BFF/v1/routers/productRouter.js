@@ -1,11 +1,9 @@
-const express = require('express');
-const axios = require('axios');
-const baseUrl = require('../constants/constants');
-const productController = require('../controller/productController')
+import { Router } from 'express';
+import productController from '../controller/productController.js';
 
 class ProductRouter{
     constructor(){
-        this.router = express.Router();
+        this.router = Router();
         this.controller = new productController();
         this.initializeRoutes();
     }
@@ -24,4 +22,4 @@ class ProductRouter{
     }
 }
 
-module.exports = ProductRouter;
+export default ProductRouter;

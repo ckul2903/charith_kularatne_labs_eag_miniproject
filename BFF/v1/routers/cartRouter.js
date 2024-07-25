@@ -1,11 +1,9 @@
-const express = require('express');
-const axios = require('axios');
-const baseUrl = require('../constants/constants');
-const cartController = require('../controller/cartController')
+import { Router } from 'express';
+import cartController from '../controller/cartController.js';
 
 class CartRouter{
     constructor(){
-        this.router = express.Router();
+        this.router = Router();
         this.controller = new cartController();
         this.initializeRoutes();
     }
@@ -23,4 +21,4 @@ class CartRouter{
     }
 }
 
-module.exports = CartRouter;
+export default CartRouter;

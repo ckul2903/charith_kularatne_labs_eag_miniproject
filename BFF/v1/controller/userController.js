@@ -1,6 +1,6 @@
-const errorResponses = require('../exception/errorResponses');
-const logger = require('../config/logger');
-const UserService = require('../service/userService')
+import axios from 'axios';
+import logger from '../config/logger.js';
+import UserService from '../service/userService.js';
 
 const userService = new UserService();
 
@@ -11,7 +11,7 @@ class UserController{
             res.status(200).json(users)
         } catch (error) {
             logger.error("User controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 
@@ -21,7 +21,7 @@ class UserController{
             res.status(201).json(newUser);
         } catch(error){
             logger.error("User controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         } 
     }
     
@@ -31,7 +31,7 @@ class UserController{
             res.status(200).json(user);
         } catch(error){
             logger.error("User controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 
@@ -41,7 +41,7 @@ class UserController{
             res.status(204).json();
         } catch(error){
             logger.error("User controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 
@@ -51,9 +51,9 @@ class UserController{
             res.status(200).json(newUser);
         } catch(error){
             logger.error("User controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 }
 
-module.exports = UserController;
+export default UserController;

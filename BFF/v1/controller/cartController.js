@@ -1,6 +1,6 @@
-const errorResponses = require('../exception/errorResponses');
-const logger = require('../config/logger');
-const CartService = require('../service/cartService')
+import axios from 'axios';
+import logger from '../config/logger.js';
+import CartService from '../service/cartService.js';
 
 const cartService = new CartService();
 
@@ -10,8 +10,8 @@ class CartController{
             const carts = await cartService.getCarts();
             res.status(200).json(carts)
         } catch (error) {
-            logger.error("Cart controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            logger.error("Cart controller | Exception occured: ",error);
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 
@@ -21,7 +21,7 @@ class CartController{
             res.status(201).json(newCart);
         } catch(error){
             logger.error("Cart controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
     
@@ -31,7 +31,7 @@ class CartController{
             res.status(200).json(cart);
         } catch(error){
             logger.error("Cart controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 
@@ -41,7 +41,7 @@ class CartController{
             res.status(204).json();
         } catch(error){
             logger.error("Cart controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 
@@ -51,9 +51,9 @@ class CartController{
             res.status(200).json(newCart);
         } catch(error){
             logger.error("Cart controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 }
 
-module.exports = CartController;
+export default CartController;

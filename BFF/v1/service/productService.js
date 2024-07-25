@@ -1,11 +1,10 @@
-const axios = require('axios');
-const logger = require('../config/logger');
-const { response } = require('express');
-const { baseUrl } = require('../constants/constants')
+import axios from 'axios';
+import logger from '../config/logger.js';
+import config from '../config/conf.js';
 
 class ProductService{
     async getProducts(){
-        return await axios.get(`${baseUrl}/products`)
+        return await axios.get(`${config.baseUrl}/products`)
         .then((response) => {
             logger.info("Product service | Got product details");
             return response.data;
@@ -17,7 +16,7 @@ class ProductService{
     }
 
     async addNewProduct(product){
-        return await axios.post(`${baseUrl}/products`,product)
+        return await axios.post(`${config.baseUrl}/products`,product)
         .then((response) => {
             logger.info("Product service | Created product");
             return response.data;
@@ -29,7 +28,7 @@ class ProductService{
     }
 
     async getProductById(productId){
-        return await axios.get(`${baseUrl}/products/${productId}`)
+        return await axios.get(`${config.baseUrl}/products/${productId}`)
         .then((response)=>{
             logger.info("Product service | Got product details");
             return response.data;
@@ -41,7 +40,7 @@ class ProductService{
     }
 
     async removeProduct(productId){
-        return await axios.delete(`${baseUrl}/products/${productId}`)
+        return await axios.delete(`${config.baseUrl}/products/${productId}`)
         .then((response)=>{
             logger.info("Product service | Successfully deleted");
             return response.data;
@@ -54,7 +53,7 @@ class ProductService{
 
     async updateProduct(product){
         productId = product.productId
-        return await axios.patch(`${baseUrl}/products/${productId}`,product)
+        return await axios.patch(`${config.baseUrl}/products/${productId}`,product)
         .then((response)=>{
             logger.info("Product service | Successfully deleted");
             return response.data;
@@ -66,7 +65,7 @@ class ProductService{
     }
 
     async getProductCategories(){
-        return await axios.get(`${baseUrl}/products/categories`)
+        return await axios.get(`${config.baseUrl}/products/categories`)
         .then((response) => {
             logger.info("recieved data from peer");
             return response.data;
@@ -78,4 +77,4 @@ class ProductService{
     }
 }
 
-module.exports = ProductService;
+export default ProductService;

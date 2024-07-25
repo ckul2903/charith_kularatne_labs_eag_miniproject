@@ -1,6 +1,6 @@
-const errorResponses = require('../exception/errorResponses');
-const logger = require('../config/logger');
-const ProductService = require('../service/productService')
+import axios from 'axios';
+import logger from '../config/logger.js';
+import ProductService from '../service/productService.js';
 
 const productService = new ProductService();
 
@@ -11,7 +11,7 @@ class ProductController{
             res.status(200).json(products)
         } catch (error) {
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 
@@ -21,7 +21,7 @@ class ProductController{
             res.status(201).json(newProduct);
         } catch(error){
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
     
@@ -31,7 +31,7 @@ class ProductController{
             res.status(200).json(product);
         } catch(error){
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 
@@ -41,7 +41,7 @@ class ProductController{
             res.status(204).json();
         } catch(error){
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 
@@ -51,7 +51,7 @@ class ProductController{
             res.status(200).json(newProduct);
         } catch(error){
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 
@@ -61,9 +61,9 @@ class ProductController{
             res.status(200).json(categories)
         } catch (error) {
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(errorResponses.INTERNAL_SERVER_ERROR)
+            res.status(500).json(axios.HttpStatusCode.InternalServerError)
         }
     }
 }
 
-module.exports = ProductController;
+export default ProductController;

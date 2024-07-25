@@ -1,11 +1,10 @@
-const axios = require('axios');
-const logger = require('../config/logger');
-const { response } = require('express');
-const { baseUrl } = require('../constants/constants')
+import axios from 'axios';
+import logger from '../config/logger.js';
+import config from '../config/conf.js';
 
 class CartService{
     async getCarts(){
-        return await axios.get(`${baseUrl}/carts`)
+        return await axios.get(`${config.baseUrl}/carts`)
         .then((response) => {
             logger.info("Cart service | Got cart details");
             return response.data;
@@ -17,7 +16,7 @@ class CartService{
     }
 
     async createCart(cart){
-        return await axios.post(`${baseUrl}/carts`,cart)
+        return await axios.post(`${config.baseUrl}/carts`,cart)
         .then((response) => {
             logger.info("Cart service | Created cart");
             return response.data;
@@ -29,7 +28,7 @@ class CartService{
     }
 
     async getCartById(cartId){
-        return await axios.get(`${baseUrl}/carts/${cartId}`)
+        return await axios.get(`${config.baseUrl}/carts/${cartId}`)
         .then((response)=>{
             logger.info("Cart service | Got cart details");
             return response.data;
@@ -52,7 +51,7 @@ class CartService{
     }
 
     async deleteCartById(cartId){
-        return await axios.delete(`${baseUrl}/carts/${cartId}`)
+        return await axios.delete(`${config.baseUrl}/carts/${cartId}`)
         .then((response)=>{
             logger.info("Cart service | Successfully deleted");
             return response.data;
@@ -64,7 +63,7 @@ class CartService{
     }
 
     async updateCart(cartId, cartContents){
-        return await axios.patch(`${baseUrl}/carts/${cartId}`,cartContents)
+        return await axios.patch(`${config.baseUrl}/carts/${cartId}`,cartContents)
         .then((response)=>{
             logger.info("Cart service | Successfully updated");
             return response.data;
@@ -76,4 +75,4 @@ class CartService{
     }
 }
 
-module.exports = CartService;
+export default CartService;
