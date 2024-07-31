@@ -11,7 +11,7 @@ class ProductController{
             res.status(200).json(products)
         } catch (error) {
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(axios.HttpStatusCode.InternalServerError)
+            res.status(error.statusCode).json(error.cause);
         }
     }
 
@@ -21,7 +21,7 @@ class ProductController{
             res.status(201).json(newProduct);
         } catch(error){
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(axios.HttpStatusCode.InternalServerError)
+            res.status(error.statusCode).json(error.cause);
         }
     }
     
@@ -31,7 +31,7 @@ class ProductController{
             res.status(200).json(product);
         } catch(error){
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(axios.HttpStatusCode.InternalServerError)
+            res.status(error.statusCode).json(error.cause);
         }
     }
 
@@ -41,7 +41,7 @@ class ProductController{
             res.status(204).json();
         } catch(error){
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(axios.HttpStatusCode.InternalServerError)
+            res.status(error.statusCode).json(error.cause);
         }
     }
 
@@ -51,7 +51,7 @@ class ProductController{
             res.status(200).json(newProduct);
         } catch(error){
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(axios.HttpStatusCode.InternalServerError)
+            res.status(error.statusCode).json(error.cause);
         }
     }
 
@@ -61,7 +61,7 @@ class ProductController{
             res.status(200).json(categories)
         } catch (error) {
             logger.error("Product controller | Exception occured: ",error.cause);
-            res.status(500).json(axios.HttpStatusCode.InternalServerError)
+            res.status(error.statusCode).json(error.cause);
         }
     }
 }

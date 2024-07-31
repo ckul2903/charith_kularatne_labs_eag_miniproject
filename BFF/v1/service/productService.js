@@ -1,6 +1,9 @@
 import axios from 'axios';
 import logger from '../config/logger.js';
 import config from '../config/conf.js';
+import BadRequestException from '../exceptions/BadRequestError.js';
+import NotFoundException from '../exceptions/NotFoundError.js';
+import BffError from '../exceptions/BffError.js';
 
 class ProductService{
     async getProducts(){
@@ -11,7 +14,7 @@ class ProductService{
         })
         .catch((error)=>{
             logger.error("Product service | Exception occured: ",error.cause);
-            throw error;
+            throw new BffError();
         });
     }
 
@@ -22,8 +25,14 @@ class ProductService{
             return response.data;
         })
         .catch((error)=>{
-            logger.error("Product service | Exception occured: ",error.cause);
-            throw error;
+            switch(error.status){
+                case 400:
+                    logger.error("Product service | Bad request");
+                    throw new BadRequestException();
+                default:
+                    logger.error("Product service | Exception occured: ",error.cause);
+                    throw new BffError();
+            }
         });
     }
 
@@ -34,8 +43,17 @@ class ProductService{
             return response.data;
         })
         .catch((error)=>{
-            logger.error("Product service | Exception occured: ",error.cause);
-            throw error;
+            switch(error.status){
+                case 400:
+                    logger.error("Product service | Bad request");
+                    throw new BadRequestException();
+                case 404:
+                        logger.error("Product service | Product not found");
+                        throw new NotFoundException()
+                default:
+                    logger.error("Product service | Exception occured: ",error.cause);
+                    throw new BffError();
+            }
         });
     }
 
@@ -46,8 +64,17 @@ class ProductService{
             return response.data;
         })
         .catch((error)=>{
-            logger.error("Product service | Exception occured: ",error.cause);
-            throw error;
+            switch(error.status){
+                case 400:
+                    logger.error("Product service | Bad request");
+                    throw new BadRequestException();
+                case 404:
+                        logger.error("Product service | Product not found");
+                        throw new NotFoundException()
+                default:
+                    logger.error("Product service | Exception occured: ",error.cause);
+                    throw new BffError();
+            }
         });
     }
 
@@ -59,8 +86,17 @@ class ProductService{
             return response.data;
         })
         .catch((error)=>{
-            logger.error("Product service | Exception occured: ",error.cause);
-            throw error;
+            switch(error.status){
+                case 400:
+                    logger.error("Product service | Bad request");
+                    throw new BadRequestException();
+                case 404:
+                        logger.error("Product service | Product not found");
+                        throw new NotFoundException()
+                default:
+                    logger.error("Product service | Exception occured: ",error.cause);
+                    throw new BffError();
+            }
         });
     }
 
