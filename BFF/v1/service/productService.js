@@ -4,7 +4,7 @@ import config from '../config/conf.js';
 
 class ProductService{
     async getProducts(){
-        return await axios.get(`${config.baseUrl}/products`)
+        return await axios.get(`${config.baseUrlPrefix}/products`)
         .then((response) => {
             logger.info("Product service | Got product details");
             return response.data;
@@ -16,7 +16,7 @@ class ProductService{
     }
 
     async addNewProduct(product){
-        return await axios.post(`${config.baseUrl}/products`,product)
+        return await axios.post(`${config.baseUrlPrefix}/products`,product)
         .then((response) => {
             logger.info("Product service | Created product");
             return response.data;
@@ -28,7 +28,7 @@ class ProductService{
     }
 
     async getProductById(productId){
-        return await axios.get(`${config.baseUrl}/products/${productId}`)
+        return await axios.get(`${config.baseUrlPrefix}/products/${productId}`)
         .then((response)=>{
             logger.info("Product service | Got product details");
             return response.data;
@@ -40,7 +40,7 @@ class ProductService{
     }
 
     async removeProduct(productId){
-        return await axios.delete(`${config.baseUrl}/products/${productId}`)
+        return await axios.delete(`${config.baseUrlPrefix}/products/${productId}`)
         .then((response)=>{
             logger.info("Product service | Successfully deleted");
             return response.data;
@@ -53,7 +53,7 @@ class ProductService{
 
     async updateProduct(product){
         productId = product.productId
-        return await axios.patch(`${config.baseUrl}/products/${productId}`,product)
+        return await axios.patch(`${config.baseUrlPrefix}/products/${productId}`,product)
         .then((response)=>{
             logger.info("Product service | Successfully deleted");
             return response.data;
@@ -65,7 +65,7 @@ class ProductService{
     }
 
     async getProductCategories(){
-        return await axios.get(`${config.baseUrl}/products/categories`)
+        return await axios.get(`${config.baseUrlPrefix}/products/categories`)
         .then((response) => {
             logger.info("recieved data from peer");
             return response.data;

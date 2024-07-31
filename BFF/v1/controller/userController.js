@@ -1,8 +1,10 @@
 import axios from 'axios';
 import logger from '../config/logger.js';
 import UserService from '../service/userService.js';
+import AuthService from '../service/authService.js';
 
 const userService = new UserService();
+const authService = new AuthService();
 
 class UserController{    
     async getUsers(req,res){
@@ -17,12 +19,14 @@ class UserController{
 
     async createUser(req,res){
         try{
-            const newUser = await userService.addNewUser(req.body);
-            res.status(201).json(newUser);
+            authService.registerUser(req.body.username,req.body.password);
+
+            const createdUser = await userService.addNewUser(req.body);
+            res.status(201).json(createdUser);
         } catch(error){
             logger.error("User controller | Exception occured: ",error.cause);
             res.status(500).json(axios.HttpStatusCode.InternalServerError)
-        } 
+        }
     }
     
     async getUserById(req,res){
@@ -47,8 +51,8 @@ class UserController{
 
     async updateUser(req,res){
         try{
-            const newUser = await userService.updateUser(req.params.id,req.body);
-            res.status(200).json(newUser);
+            const updatedUser = await userService.updateUser(req.params.id,req.body);
+            res.status(200).json(updatedUser);
         } catch(error){
             logger.error("User controller | Exception occured: ",error.cause);
             res.status(500).json(axios.HttpStatusCode.InternalServerError)
