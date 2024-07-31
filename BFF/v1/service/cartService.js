@@ -4,7 +4,7 @@ import config from '../config/conf.js';
 
 class CartService{
     async getCarts(){
-        return await axios.get(`${config.baseUrl}/carts`)
+        return await axios.get(`${config.baseUrlPrefix}/carts`)
         .then((response) => {
             logger.info("Cart service | Got cart details");
             return response.data;
@@ -16,7 +16,7 @@ class CartService{
     }
 
     async createCart(cart){
-        return await axios.post(`${config.baseUrl}/carts`,cart)
+        return await axios.post(`${config.baseUrlPrefix}/carts`,cart)
         .then((response) => {
             logger.info("Cart service | Created cart");
             return response.data;
@@ -28,13 +28,13 @@ class CartService{
     }
 
     async getCartById(cartId){
-        return await axios.get(`${config.baseUrl}/carts/${cartId}`)
+        return await axios.get(`${config.baseUrlPrefix}/carts/${cartId}`)
         .then((response)=>{
             logger.info("Cart service | Got cart details");
             return response.data;
         })
         .catch((error)=>{
-            switch (error.status) {
+            switch (error.response.status) {
                 case 404:
                     logger.error("NOT FOUND");
                     break;
@@ -51,7 +51,7 @@ class CartService{
     }
 
     async deleteCartById(cartId){
-        return await axios.delete(`${config.baseUrl}/carts/${cartId}`)
+        return await axios.delete(`${config.baseUrlPrefix}/carts/${cartId}`)
         .then((response)=>{
             logger.info("Cart service | Successfully deleted");
             return response.data;
@@ -63,7 +63,7 @@ class CartService{
     }
 
     async updateCart(cartId, cartContents){
-        return await axios.patch(`${config.baseUrl}/carts/${cartId}`,cartContents)
+        return await axios.patch(`${config.baseUrlPrefix}/carts/${cartId}`,cartContents)
         .then((response)=>{
             logger.info("Cart service | Successfully updated");
             return response.data;

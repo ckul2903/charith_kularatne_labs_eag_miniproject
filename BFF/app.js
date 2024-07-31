@@ -10,9 +10,10 @@ const productRouter = new ProductRouter();
 const userRouter = new UserRouter();
 
 app.use(json());
-app.use('/api/v1/carts', cartRouter.getRouter());
-app.use('/api/v1/products', productRouter.getRouter());
-app.use('/api/v1/users', userRouter.getRouter());
+app.use(`${config.bffUrlPrefix}/carts`, cartRouter.getRouter());
+app.use(`${config.bffUrlPrefix}/products`, productRouter.getRouter());
+app.use(`${config.bffUrlPrefix}/users`, userRouter.getRouter());
+
 
 app.listen(config.port, ()=>{
     console.log('Server started on port',config.port);
