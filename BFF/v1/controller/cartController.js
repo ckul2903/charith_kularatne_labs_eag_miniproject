@@ -11,7 +11,7 @@ class CartController{
             res.status(200).json(carts)
         } catch (error) {
             logger.error("Cart controller | Exception occured: ",error);
-            res.status(500).json(axios.HttpStatusCode.InternalServerError)
+            res.status(error.statusCode).json(error.cause);
         }
     }
 
@@ -21,7 +21,7 @@ class CartController{
             res.status(201).json(newCart);
         } catch(error){
             logger.error("Cart controller | Exception occured: ",error.cause);
-            res.status(500).json(axios.HttpStatusCode.InternalServerError)
+            res.status(error.statusCode).json(error.cause);
         }
     }
     
@@ -31,7 +31,7 @@ class CartController{
             res.status(200).json(cart);
         } catch(error){
             logger.error("Cart controller | Exception occured: ",error.cause);
-            res.status(500).json(axios.HttpStatusCode.InternalServerError)
+            res.status(error.statusCode).json(error.cause);
         }
     }
 
@@ -41,7 +41,7 @@ class CartController{
             res.status(204).json();
         } catch(error){
             logger.error("Cart controller | Exception occured: ",error.cause);
-            res.status(500).json(axios.HttpStatusCode.InternalServerError)
+            res.status(error.statusCode).json(error.cause);
         }
     }
 
@@ -51,7 +51,7 @@ class CartController{
             res.status(200).json(newCart);
         } catch(error){
             logger.error("Cart controller | Exception occured: ",error.cause);
-            res.status(500).json(axios.HttpStatusCode.InternalServerError)
+            res.status(error.statusCode).json(error.cause);
         }
     }
 }

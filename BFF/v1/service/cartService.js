@@ -1,6 +1,9 @@
 import axios from 'axios';
 import logger from '../config/logger.js';
 import config from '../config/conf.js';
+import BadRequestException from '../exceptions/BadRequestError.js';
+import NotFoundException from '../exceptions/NotFoundError.js';
+import BffError from '../exceptions/BffError.js';
 
 class CartService{
     async getCarts(){
@@ -10,8 +13,8 @@ class CartService{
             return response.data;
         })
         .catch((error)=>{
-            logger.error("Cart service | Exception occured: ",error.cause);
-            throw error;
+            logger.error("Cart service | Exception occured: ",error);
+            throw new BffError();
         });
     }
 
@@ -22,8 +25,14 @@ class CartService{
             return response.data;
         })
         .catch((error)=>{
-            logger.error("Cart service | Exception occured: ",error.cause);
-            throw error;
+            switch(error.status){
+                case 400:
+                    logger.error("Cart service | Bad request");
+                    throw new BadRequestException();
+                default:
+                    logger.error("Cart service | Exception occured: ",error);
+                    throw new BffError();
+            }
         });
     }
 
@@ -34,19 +43,17 @@ class CartService{
             return response.data;
         })
         .catch((error)=>{
-            switch (error.response.status) {
-                case 404:
-                    logger.error("NOT FOUND");
-                    break;
+            switch(error.status){
                 case 400:
-                    logger.error("BAD REQUEST");
-                    break
+                    logger.error("Cart service | Bad request");
+                    throw new BadRequestException();
+                case 404:
+                    logger.error("Cart service | Not found");
+                    throw new NotFoundException();
                 default:
-                    logger.error("INTERNAL ERROR");
-                    break;
+                    logger.error("Cart service | Exception occured: ",error);
+                    throw new BffError();
             }
-            logger.error("Cart service | Exception occured: ",error.cause);
-            throw error;
         });
     }
 
@@ -57,8 +64,17 @@ class CartService{
             return response.data;
         })
         .catch((error)=>{
-            logger.error("Cart service | Exception occured: ",error.cause);
-            throw error;
+            switch(error.status){
+                case 400:
+                    logger.error("Cart service | Bad request");
+                    throw new BadRequestException();
+                case 404:
+                    logger.error("Cart service | Not found");
+                    throw new NotFoundException();
+                default:
+                    logger.error("Cart service | Exception occured: ",error);
+                    throw new BffError();
+            }
         });
     }
 
@@ -69,8 +85,17 @@ class CartService{
             return response.data;
         })
         .catch((error)=>{
-            logger.error("Cart service | Exception occured: ",error.cause);
-            throw error;
+            switch(error.status){
+                case 400:
+                    logger.error("Cart service | Bad request");
+                    throw new BadRequestException();
+                case 404:
+                    logger.error("Cart service | Not found");
+                    throw new NotFoundException();
+                default:
+                    logger.error("Cart service | Exception occured: ",error);
+                    throw new BffError();
+            }
         });
     }
 }
