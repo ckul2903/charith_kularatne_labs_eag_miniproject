@@ -1,8 +1,6 @@
-import axios from 'axios';
 import logger from '../config/logger.js';
 import UserService from '../service/userService.js';
 import AuthService from '../service/authService.js';
-import BffError from '../exceptions/BffError.js';
 
 const userService = new UserService();
 const authService = new AuthService();
