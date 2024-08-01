@@ -1,4 +1,3 @@
-import axios from 'axios';
 import logger from '../config/logger.js';
 import ProductService from '../service/productService.js';
 
@@ -10,7 +9,7 @@ class ProductController{
             const products = await productService.getProducts();
             res.status(200).json(products)
         } catch (error) {
-            logger.error("Product controller | Exception occured: ",error.cause);
+            logger.error("User Controller | Get products | ",error.cause);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -20,7 +19,7 @@ class ProductController{
             const newProduct = await productService.addNewProduct(req.body);
             res.status(201).json(newProduct);
         } catch(error){
-            logger.error("Product controller | Exception occured: ",error.cause);
+            logger.error("User Controller | Create product | ",error.cause);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -30,7 +29,7 @@ class ProductController{
             const product = await productService.getProductById(req.params.id);
             res.status(200).json(product);
         } catch(error){
-            logger.error("Product controller | Exception occured: ",error.cause);
+            logger.error("User Controller | Get product by ID | ",error.cause);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -40,7 +39,7 @@ class ProductController{
             await productService.removeProduct(req.params.id);
             res.status(204).json();
         } catch(error){
-            logger.error("Product controller | Exception occured: ",error.cause);
+            logger.error("User Controller | Delete product by ID | ",error.cause);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -50,7 +49,7 @@ class ProductController{
             const newProduct = await productService.updateProduct(req.params.id,req.body);
             res.status(200).json(newProduct);
         } catch(error){
-            logger.error("Product controller | Exception occured: ",error.cause);
+            logger.error("User Controller | Update product | ",error.cause);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -60,7 +59,7 @@ class ProductController{
             const categories = await productService.getProductCategories();
             res.status(200).json(categories)
         } catch (error) {
-            logger.error("Product controller | Exception occured: ",error.cause);
+            logger.error("User Controller | Get product categories | ",error.cause);
             res.status(error.statusCode).json(error.cause);
         }
     }

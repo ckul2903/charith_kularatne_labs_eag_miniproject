@@ -11,7 +11,7 @@ class UserController{
             const users = await userService.getUsers();
             res.status(200).json(users)
         } catch (error) {
-            logger.error("User controller | ", error);
+            logger.error("User Controller | Get user | ", error);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -23,7 +23,7 @@ class UserController{
             const createdUser = await userService.createUser(req.body);
             res.status(201).json(createdUser);
         } catch(error){
-            logger.error("User controller | ",error);
+            logger.error("User Controller | Create user | ",error);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -33,7 +33,7 @@ class UserController{
             const user = await userService.getUserById(req.params.id);
             res.status(200).json(user);
         } catch(error){
-            logger.error("User controller | ",error);
+            logger.error("User Controller | Get user by ID | ",error);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -43,7 +43,7 @@ class UserController{
             await userService.removeUser(req.params.id);
             res.status(204).json();
         } catch(error){
-            logger.error("User controller | ",error);
+            logger.error("User Controller | Delete user by ID | ",error);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -53,7 +53,7 @@ class UserController{
             const updatedUser = await userService.updateUser(req.params.id,req.body);
             res.status(200).json(updatedUser);
         } catch(error){
-            logger.error("User controller | ",error);
+            logger.error("User Controller | Update user | ",error);
             res.status(error.statusCode).json(error.cause);
         }
     }
