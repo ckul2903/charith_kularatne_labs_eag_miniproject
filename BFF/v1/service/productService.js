@@ -4,10 +4,14 @@ import config from '../config/conf.js';
 import BadRequestException from '../exceptions/BadRequestError.js';
 import NotFoundException from '../exceptions/NotFoundError.js';
 import BffError from '../exceptions/BffError.js';
+import { productApi } from '../api/apiinstances.js';
+import { httpMethods } from '../config/constants.js';
 
 class ProductService{
     async getProducts(){
-        return await axios.get(`${config.baseUrlPrefix}/products`)
+        return await productApi.request({
+            method:httpMethods.GET
+        })
         .then((response) => {
             logger.info("Product service | Get Products | Got product details");
             return response.data;
@@ -19,7 +23,10 @@ class ProductService{
     }
 
     async addNewProduct(product){
-        return await axios.post(`${config.baseUrlPrefix}/products`,product)
+        return await productApi.request({
+            method:httpMethods.GET,
+            data:product
+        })
         .then((response) => {
             logger.info("Product service | Create Products | Created product");
             return response.data;
@@ -37,7 +44,10 @@ class ProductService{
     }
 
     async getProductById(productId){
-        return await axios.get(`${config.baseUrlPrefix}/products/${productId}`)
+        return await productApi.request({
+            url:`/${productId}`,
+            method:httpMethods.GET,
+        })
         .then((response)=>{
             logger.info("Product service | Get Product by ID | Got product details");
             return response.data;
@@ -58,7 +68,10 @@ class ProductService{
     }
 
     async removeProduct(productId){
-        return await axios.delete(`${config.baseUrlPrefix}/products/${productId}`)
+        return await productApi.request({
+            url:`/${productId}`,
+            method:httpMethods.DELETE,
+        })
         .then((response)=>{
             logger.info("Product service | Delete Products | Successfully deleted");
             return response.data;
@@ -80,7 +93,11 @@ class ProductService{
 
     async updateProduct(product){
         productId = product.productId
-        return await axios.patch(`${config.baseUrlPrefix}/products/${productId}`,product)
+        return await productApi.request({
+            url:`/${productId}`,
+            method:httpMethods.PATCH,
+            data:product
+        })
         .then((response)=>{
             logger.info("Product service | Update Products | Successfully deleted");
             return response.data;
@@ -101,7 +118,10 @@ class ProductService{
     }
 
     async getProductCategories(){
-        return await axios.get(`${config.baseUrlPrefix}/products/categories`)
+        return await productApi.request({
+            url:`/categories`,
+            method:httpMethods.GET,
+        })
         .then((response) => {
             logger.info("Product service | Get Product Categories | Recieved data");
             return response.data;

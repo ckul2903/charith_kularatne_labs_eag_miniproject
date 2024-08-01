@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import axios from "axios";
 
 dotenv.config();
 
@@ -11,5 +12,9 @@ const config={
     userPoolId: process.env.USER_POOL_ID,
     clientId: process.env.CLIENT_ID,
 }
+
+const productApi = axios.create({
+    baseURL: config.baseUrlPrefix+"/products"
+});
 
 export default config;

@@ -4,10 +4,14 @@ import config from '../config/conf.js';
 import BadRequestException from '../exceptions/BadRequestError.js';
 import NotFoundException from '../exceptions/NotFoundError.js';
 import BffError from '../exceptions/BffError.js';
+import { cartApi } from '../api/apiinstances.js';
+import { httpMethods } from '../config/constants.js';
 
 class CartService{
     async getCarts(){
-        return await axios.get(`${config.baseUrlPrefix}/carts`)
+        return await cartApi.request({
+            method:httpMethods.GET,
+        })
         .then((response) => {
             logger.info("Cart service | Get Carts | Got cart details");
             return response.data;
@@ -19,7 +23,10 @@ class CartService{
     }
 
     async createCart(cart){
-        return await axios.post(`${config.baseUrlPrefix}/carts`,cart)
+        return await cartApi.request({
+            method:httpMethods.POST,
+            data:cart,
+        })
         .then((response) => {
             logger.info("Cart service | Create Carts | Created cart");
             return response.data;
@@ -37,7 +44,10 @@ class CartService{
     }
 
     async getCartById(cartId){
-        return await axios.get(`${config.baseUrlPrefix}/carts/${cartId}`)
+        return await cartApi.request({
+            url:`/${cartId}`,
+            method:httpMethods.GET,
+        })
         .then((response)=>{
             logger.info("Cart service | Get Cart by ID | Got cart details");
             return response.data;
@@ -58,7 +68,10 @@ class CartService{
     }
 
     async deleteCartById(cartId){
-        return await axios.delete(`${config.baseUrlPrefix}/carts/${cartId}`)
+        return await await cartApi.request({
+            url:`/${cartId}`,
+            method:httpMethods.DELETE,
+        })
         .then((response)=>{
             logger.info("Cart service | Delete Cart | Successfully deleted");
             return response.data;

@@ -32,15 +32,15 @@ class AuthService {
     }
   };
 
-  async registerUser(username,password){
-    const attributeList = [];
-  
-    const attributeUsername = new CognitoUserAttribute({Name:'preferred_username', Value:username});
-  
-    attributeList.push(attributeUsername);
-  
+  async registerUser(username,password,role){
     try {
-        userPool.signUp(username, password, attributeList, null, (err, result) => {
+      const attributeList = [];
+  
+      const attributeUsername = new CognitoUserAttribute({Name:'preferred_username', Value:username});
+      // const attributeUserGroup = new CognitoUserAttribute({Name:'custom:group', Value:role});
+    
+      attributeList.push(attributeUsername);
+      userPool.signUp(username, password, attributeList, null, (err, result) => {
             if (err) {
                 throw err;
             }
