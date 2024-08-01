@@ -4,10 +4,14 @@ import config from '../config/conf.js';
 import BadRequestException from '../exceptions/BadRequestError.js';
 import NotFoundException from '../exceptions/NotFoundError.js';
 import BffError from '../exceptions/BffError.js';
+import { userApi } from '../api/apiinstances.js';
+import { httpMethods } from '../config/constants.js';
 
 class UserService{
     async getUsers(){
-        return await axios.get(`${config.baseUrlPrefix}/users`)
+        return await userApi.request({
+            method:httpMethods.GET
+        })
         .then((response) => {
             logger.info("User service | Got user details");
             return response.data;
@@ -19,7 +23,10 @@ class UserService{
     }
 
     async createUser(user){
-        return await axios.post(`${config.baseUrlPrefix}/users`,user)
+        return await userApi.request({
+            method:httpMethods.POST,
+            data:user,
+        })
         .then((response) => {
             logger.info("User service | Created user");
             return response.data;
@@ -37,7 +44,10 @@ class UserService{
     }
 
     async getUserById(userId){
-        return await axios.get(`${config.baseUrlPrefix}/users/${userId}`)
+        return await userApi.request({
+            url:`/${userId}`,
+            method:httpMethods.GET,
+        })
         .then((response)=>{
             logger.info("User service | Got user details");
             return response.data;
@@ -58,7 +68,10 @@ class UserService{
     }
 
     async removeUser(userId){
-        return await axios.delete(`${config.baseUrlPrefix}/users/${userId}`)
+        return await userApi.request({
+            url:`/${userId}`,
+            method:httpMethods.DELETE,
+        })
         .then((response)=>{
             logger.info("User service | Successfully deleted");
             return response.data;
@@ -79,7 +92,11 @@ class UserService{
     }
 
     async updateUser(userId, user){
-        return await axios.put(`${config.baseUrlPrefix}/users/${userId}`,user)
+        return await userApi.request({
+            url:`/${userId}`,
+            method:httpMethods.PUT,
+            data:user,
+        })
         .then((response)=>{
             logger.info("User service | Successfully deleted");
             return response.data;
