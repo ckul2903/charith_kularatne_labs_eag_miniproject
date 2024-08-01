@@ -13,12 +13,12 @@ class ProductService{
             method:httpMethods.GET
         })
         .then((response) => {
-            logger.info("Product service | Got product details");
+            logger.info("Product service | Get Products | Got product details");
             return response.data;
         })
         .catch((error)=>{
-            logger.error("Product service | Exception occured: ",error.cause);
-            throw new BffError();
+            logger.error("Product service | Get Products | ",error);
+            throw new BffError("error getting product list");
         });
     }
 
@@ -28,17 +28,17 @@ class ProductService{
             data:product
         })
         .then((response) => {
-            logger.info("Product service | Created product");
+            logger.info("Product service | Create Products | Created product");
             return response.data;
         })
         .catch((error)=>{
             switch(error.status){
                 case 400:
-                    logger.error("Product service | Bad request");
+                    logger.error("Product service | Create Products | Bad request");
                     throw new BadRequestException();
                 default:
-                    logger.error("Product service | Exception occured: ",error.cause);
-                    throw new BffError();
+                    logger.error("Product service | Create Products | ",error);
+                    throw new BffError("error adding product");
             }
         });
     }
@@ -49,20 +49,20 @@ class ProductService{
             method:httpMethods.GET,
         })
         .then((response)=>{
-            logger.info("Product service | Got product details");
+            logger.info("Product service | Get Product by ID | Got product details");
             return response.data;
         })
         .catch((error)=>{
             switch(error.status){
                 case 400:
-                    logger.error("Product service | Bad request");
+                    logger.error("Product service | Get Product by ID | Bad request");
                     throw new BadRequestException();
                 case 404:
-                        logger.error("Product service | Product not found");
+                        logger.error("Product service | Get Product by ID | Product not found");
                         throw new NotFoundException()
                 default:
-                    logger.error("Product service | Exception occured: ",error.cause);
-                    throw new BffError();
+                    logger.error("Product service | Get Product by ID | ",error);
+                    throw new BffError("error getting product "+productId);
             }
         });
     }
@@ -73,20 +73,20 @@ class ProductService{
             method:httpMethods.DELETE,
         })
         .then((response)=>{
-            logger.info("Product service | Successfully deleted");
+            logger.info("Product service | Delete Products | Successfully deleted");
             return response.data;
         })
         .catch((error)=>{
             switch(error.status){
                 case 400:
-                    logger.error("Product service | Bad request");
+                    logger.error("Product service | Delete Products | Bad request");
                     throw new BadRequestException();
                 case 404:
-                        logger.error("Product service | Product not found");
+                        logger.error("Product service | Delete Products | Product not found");
                         throw new NotFoundException()
                 default:
-                    logger.error("Product service | Exception occured: ",error.cause);
-                    throw new BffError();
+                    logger.error("Product service | Delete Products | ",error);
+                    throw new BffError("error deleting product "+productId);
             }
         });
     }
@@ -99,20 +99,20 @@ class ProductService{
             data:product
         })
         .then((response)=>{
-            logger.info("Product service | Successfully deleted");
+            logger.info("Product service | Update Products | Successfully deleted");
             return response.data;
         })
         .catch((error)=>{
             switch(error.status){
                 case 400:
-                    logger.error("Product service | Bad request");
+                    logger.error("Product service | Update Products | Bad request");
                     throw new BadRequestException();
                 case 404:
-                        logger.error("Product service | Product not found");
+                        logger.error("Product service | Update Products | Product not found");
                         throw new NotFoundException()
                 default:
-                    logger.error("Product service | Exception occured: ",error.cause);
-                    throw new BffError();
+                    logger.error("Product service | Update Products | ",error);
+                    throw new BffError("error updating product "+productId);
             }
         });
     }
@@ -123,12 +123,12 @@ class ProductService{
             method:httpMethods.GET,
         })
         .then((response) => {
-            logger.info("recieved data from peer");
+            logger.info("Product service | Get Product Categories | Recieved data");
             return response.data;
         })
         .catch((error)=>{
-            logger.error("Product service | Exception occured: ",error.cause);
-            throw error;
+            logger.error("Product service | Get Product Categories | ",error);
+            throw new BffError("error getting category list");
         });
     }
 }

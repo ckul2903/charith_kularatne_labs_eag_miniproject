@@ -23,12 +23,12 @@ class AuthService {
               return result;
             },
             onFailure: (err) => {
-                throw new BffError("Authentication failed",500);
+              throw err;
             }
         })
     } catch (error) {
-        logger.error("Auth service | Exception : {}", error.cause);
-        throw error;
+        logger.error("Auth service | Authenticate user | ", error);
+        throw BffError("error when authenticating user")
     }
   };
 
@@ -41,17 +41,16 @@ class AuthService {
     
       attributeList.push(attributeUsername);
       userPool.signUp(username, password, attributeList, null, (err, result) => {
-        if (err) {
-          console.log(err);
-          throw new BffError("Registration failed", 500);
-        }
-        const cognitoUser = result.user;
-        logger.info('user name is ' + cognitoUser.getUsername());
-        return cognitoUser;
-      });
+            if (err) {
+                throw err;
+            }
+            const cognitoUser = result.user;
+            logger.info('user name is ' + cognitoUser.getUsername());
+            return cognitoUser;
+        });
     } catch (error) {
-      logger.error("Auth service | Exception : "+ error);
-      throw error;
+        logger.error("Auth service | Register user | ", error);
+        throw new BffError("error when registering user")
     }
   }
 }

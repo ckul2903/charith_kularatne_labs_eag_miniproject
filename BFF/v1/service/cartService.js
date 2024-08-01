@@ -13,12 +13,12 @@ class CartService{
             method:httpMethods.GET,
         })
         .then((response) => {
-            logger.info("Cart service | Got cart details");
+            logger.info("Cart service | Get Carts | Got cart details");
             return response.data;
         })
         .catch((error)=>{
-            logger.error("Cart service | Exception occured: ",error);
-            throw new BffError();
+            logger.error("Cart service | Get Carts | Exception occured: ",error);
+            throw new BffError("error getting cart list");
         });
     }
 
@@ -28,17 +28,17 @@ class CartService{
             data:cart,
         })
         .then((response) => {
-            logger.info("Cart service | Created cart");
+            logger.info("Cart service | Create Carts | Created cart");
             return response.data;
         })
         .catch((error)=>{
             switch(error.status){
                 case 400:
-                    logger.error("Cart service | Bad request");
+                    logger.error("Cart service | Create Carts | Bad request");
                     throw new BadRequestException();
                 default:
-                    logger.error("Cart service | Exception occured: ",error);
-                    throw new BffError();
+                    logger.error("Cart service | Create Carts | ",error);
+                    throw new BffError("error creating cart");
             }
         });
     }
@@ -49,20 +49,20 @@ class CartService{
             method:httpMethods.GET,
         })
         .then((response)=>{
-            logger.info("Cart service | Got cart details");
+            logger.info("Cart service | Get Cart by ID | Got cart details");
             return response.data;
         })
         .catch((error)=>{
             switch(error.status){
                 case 400:
-                    logger.error("Cart service | Bad request");
+                    logger.error("Cart service | Get Cart by ID | Bad request");
                     throw new BadRequestException();
                 case 404:
-                    logger.error("Cart service | Not found");
+                    logger.error("Cart service | Get Cart by ID | Not found");
                     throw new NotFoundException();
                 default:
-                    logger.error("Cart service | Exception occured: ",error);
-                    throw new BffError();
+                    logger.error("Cart service | Get Cart by ID | ",error);
+                    throw new BffError("error getting cart "+cartId);
             }
         });
     }
@@ -73,20 +73,20 @@ class CartService{
             method:httpMethods.DELETE,
         })
         .then((response)=>{
-            logger.info("Cart service | Successfully deleted");
+            logger.info("Cart service | Delete Cart | Successfully deleted");
             return response.data;
         })
         .catch((error)=>{
             switch(error.status){
                 case 400:
-                    logger.error("Cart service | Bad request");
+                    logger.error("Cart service | Delete Cart | Bad request");
                     throw new BadRequestException();
                 case 404:
-                    logger.error("Cart service | Not found");
+                    logger.error("Cart service | Delete Cart | Not found");
                     throw new NotFoundException();
                 default:
-                    logger.error("Cart service | Exception occured: ",error);
-                    throw new BffError();
+                    logger.error("Cart service | Delete Cart | Exception occured: ",error);
+                    throw new BffError("error deleting cart "+cartId);
             }
         });
     }
@@ -94,20 +94,20 @@ class CartService{
     async updateCart(cartId, cartContents){
         return await axios.patch(`${config.baseUrlPrefix}/carts/${cartId}`,cartContents)
         .then((response)=>{
-            logger.info("Cart service | Successfully updated");
+            logger.info("Cart service | Update Cart | Successfully updated");
             return response.data;
         })
         .catch((error)=>{
             switch(error.status){
                 case 400:
-                    logger.error("Cart service | Bad request");
+                    logger.error("Cart service | Update Cart | Bad request");
                     throw new BadRequestException();
                 case 404:
-                    logger.error("Cart service | Not found");
+                    logger.error("Cart service | Update Cart | Not found");
                     throw new NotFoundException();
                 default:
-                    logger.error("Cart service | Exception occured: ",error);
-                    throw new BffError();
+                    logger.error("Cart service | Update Cart | Exception occured: ",error);
+                    throw new BffError("error updating cart "+cartId);
             }
         });
     }

@@ -3,7 +3,7 @@ import BffError from "./BffError.js";
 
 class BadRequestError extends BffError{
     constructor(){
-        super("bad request", axios.HttpStatusCode.BadRequest);
+        super("Bad request", axios.HttpStatusCode.BadRequest);
     }
 }
 

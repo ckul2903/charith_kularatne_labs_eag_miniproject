@@ -1,4 +1,3 @@
-import axios from 'axios';
 import logger from '../config/logger.js';
 import CartService from '../service/cartService.js';
 
@@ -10,7 +9,7 @@ class CartController{
             const carts = await cartService.getCarts();
             res.status(200).json(carts)
         } catch (error) {
-            logger.error("Cart controller | Exception occured: ",error);
+            logger.error("Cart Controller | Get carts | ",error);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -20,7 +19,7 @@ class CartController{
             const newCart = await cartService.createCart(req.body);
             res.status(201).json(newCart);
         } catch(error){
-            logger.error("Cart controller | Exception occured: ",error.cause);
+            logger.error("Cart Controller | Create carts | ",error);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -30,7 +29,7 @@ class CartController{
             const cart = await cartService.getCartById(req.params.id);
             res.status(200).json(cart);
         } catch(error){
-            logger.error("Cart controller | Exception occured: ",error.cause);
+            logger.error("Cart Controller | Get cart by ID | ",error);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -40,7 +39,7 @@ class CartController{
             await cartService.deleteCartById(req.params.id);
             res.status(204).json();
         } catch(error){
-            logger.error("Cart controller | Exception occured: ",error.cause);
+            logger.error("Cart Controller | Delete cart | ",error);
             res.status(error.statusCode).json(error.cause);
         }
     }
@@ -50,7 +49,7 @@ class CartController{
             const newCart = await cartService.updateCart(req.params.id,req.body);
             res.status(200).json(newCart);
         } catch(error){
-            logger.error("Cart controller | Exception occured: ",error.cause);
+            logger.error("Cart Controller | Update cart | ",error);
             res.status(error.statusCode).json(error.cause);
         }
     }
