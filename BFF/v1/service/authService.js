@@ -1,6 +1,7 @@
 import {CognitoUser , AuthenticationDetails , CognitoUserAttribute} from 'amazon-cognito-identity-js';
 import userPool from '../connectors/cognitoUserPoolConnector.js';
 import logger from '../config/logger.js';
+import BffError from '../exceptions/BffError.js';
 
 class AuthService {
   async authenticateUser(username, password){  
@@ -22,33 +23,35 @@ class AuthService {
               return result;
             },
             onFailure: (err) => {
-                throw new Error;
+                throw new BffError("Authentication failed",500);
             }
         })
     } catch (error) {
         logger.error("Auth service | Exception : {}", error.cause);
+        throw error;
     }
   };
 
-  async registerUser(username,password){
-    const attributeList = [];
-  
-    const attributeUsername = new CognitoUserAttribute({Name:'preferred_username', Value:username});
-  
-    attributeList.push(attributeUsername);
-  
+  async registerUser(username,password,role){
     try {
-        userPool.signUp(username, password, attributeList, null, (err, result) => {
-            if (err) {
-                console.log(err);
-                throw new Error;
-            }
-            const cognitoUser = result.user;
-            logger.info('user name is ' + cognitoUser.getUsername());
-            return cognitoUser;
-        });
+      const attributeList = [];
+  
+      const attributeUsername = new CognitoUserAttribute({Name:'preferred_username', Value:username});
+      // const attributeUserGroup = new CognitoUserAttribute({Name:'custom:group', Value:role});
+    
+      attributeList.push(attributeUsername);
+      userPool.signUp(username, password, attributeList, null, (err, result) => {
+        if (err) {
+          console.log(err);
+          throw new BffError("Registration failed", 500);
+        }
+        const cognitoUser = result.user;
+        logger.info('user name is ' + cognitoUser.getUsername());
+        return cognitoUser;
+      });
     } catch (error) {
-        logger.error("Auth service | Exception : {}", error.cause);
+      logger.error("Auth service | Exception : "+ error);
+      throw error;
     }
   }
 }

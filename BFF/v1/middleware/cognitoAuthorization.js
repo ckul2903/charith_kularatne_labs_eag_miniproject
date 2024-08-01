@@ -1,1 +1,3 @@
-const authorize = () => {};
+const authorize = (roles) => {
+    
+};

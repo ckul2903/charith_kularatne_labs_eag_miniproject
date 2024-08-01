@@ -1,6 +1,7 @@
 import logger from '../config/logger.js';
 import UserService from '../service/userService.js';
 import AuthService from '../service/authService.js';
+import Roles from '../config/userRoles.js'
 
 const userService = new UserService();
 const authService = new AuthService();
@@ -18,7 +19,7 @@ class UserController{
 
     async createUser(req,res){
         try{
-            await authService.registerUser(req.body.username,req.body.password);
+            authService.registerUser(req.body.username,req.body.password, Roles.admin);
 
             const createdUser = await userService.createUser(req.body);
             res.status(201).json(createdUser);
