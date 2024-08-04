@@ -7,6 +7,7 @@ class CartController{
     async getCarts(req,res){
         try {
             const carts = await cartService.getCarts();
+            logger.info("Cart Controller | Got carts");
             res.status(200).json(carts)
         } catch (error) {
             logger.error("Cart Controller | Get carts | ",error);
@@ -16,8 +17,9 @@ class CartController{
 
     async createCart(req,res){
         try{
-            const newCart = await cartService.createCart(req.body);
-            res.status(201).json(newCart);
+            const createdCart = await cartService.createCart(req.body);
+            logger.info("Cart Controller | Created cart", createdCart.data.cartId);
+            res.status(201).json(createdCart);
         } catch(error){
             logger.error("Cart Controller | Create carts | ",error);
             res.status(error.statusCode).json(error.cause);
@@ -27,6 +29,7 @@ class CartController{
     async getCartById(req,res){
         try{
             const cart = await cartService.getCartById(req.params.id);
+            logger.info("Cart Controller | Got cart", cart.data.id);
             res.status(200).json(cart);
         } catch(error){
             logger.error("Cart Controller | Get cart by ID | ",error);
@@ -37,6 +40,7 @@ class CartController{
     async deleteCartById(req,res){
         try{
             await cartService.deleteCartById(req.params.id);
+            logger.info("Cart Controller | Deleted cart",req.params.id);
             res.status(204).json();
         } catch(error){
             logger.error("Cart Controller | Delete cart | ",error);
@@ -47,6 +51,7 @@ class CartController{
     async updateCart(req,res){
         try{
             const newCart = await cartService.updateCart(req.params.id,req.body);
+            logger.info("Product Controller | Update cart | Successfully updated",req.params.id);
             res.status(200).json(newCart);
         } catch(error){
             logger.error("Cart Controller | Update cart | ",error);

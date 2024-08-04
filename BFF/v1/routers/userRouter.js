@@ -14,6 +14,7 @@ class UserRouter{
         this.router.get('/:id', this.controller.getUserById);
         this.router.delete('/:id', this.controller.deleteUserById);
         this.router.put('/:id', this.controller.updateUser);
+        this.router.post('/:id/authenticate',this.controller.authenticateUser);
     }
 
     getRouter(){

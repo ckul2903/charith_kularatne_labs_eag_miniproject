@@ -1,6 +1,4 @@
-import axios from 'axios';
 import logger from '../config/logger.js';
-import config from '../config/conf.js';
 import BadRequestException from '../exceptions/BadRequestError.js';
 import NotFoundException from '../exceptions/NotFoundError.js';
 import BffError from '../exceptions/BffError.js';
@@ -8,127 +6,142 @@ import { productApi } from '../api/apiinstances.js';
 import { httpMethods } from '../config/constants.js';
 
 class ProductService{
-    async getProducts(){
-        return await productApi.request({
-            method:httpMethods.GET
-        })
-        .then((response) => {
-            logger.info("Product service | Get Products | Got product details");
-            return response.data;
-        })
-        .catch((error)=>{
-            logger.error("Product service | Get Products | ",error);
-            throw new BffError("error getting product list");
+    getProducts(){
+        return new Promise((resolve, reject) => {
+            productApi.request({
+                method:httpMethods.GET
+            })
+            .then((response) => {
+                logger.info("Product service | Get Products | Got product details");
+                resolve(response.data);
+            })
+            .catch((error)=>{
+                logger.error("Product service | Get Products | ",error);
+                reject(new BffError("error getting product list"));
+            });
         });
     }
 
-    async addNewProduct(product){
-        return await productApi.request({
-            method:httpMethods.GET,
-            data:product
-        })
-        .then((response) => {
-            logger.info("Product service | Create Products | Created product");
-            return response.data;
-        })
-        .catch((error)=>{
-            switch(error.status){
-                case 400:
-                    logger.error("Product service | Create Products | Bad request");
-                    throw new BadRequestException();
-                default:
-                    logger.error("Product service | Create Products | ",error);
-                    throw new BffError("error adding product");
-            }
+    addNewProduct(product){
+        return new Promise((resolve, reject) => {
+            productApi.request({
+                method:httpMethods.POST,
+                data:product
+            })
+            .then((response) => {
+                logger.info("Product service | Create Products | Created product");
+                resolve(response.data);
+            })
+            .catch((error)=>{
+                switch(error.status){
+                    case 400:
+                        logger.error("Product service | Create Products | Bad request");
+                        reject(new BadRequestException());
+                    default:
+                        logger.error("Product service | Create Products | ",error);
+                        reject(new BffError("error adding product"));
+                }
+            });
         });
     }
 
     async getProductById(productId){
-        return await productApi.request({
-            url:`/${productId}`,
-            method:httpMethods.GET,
-        })
-        .then((response)=>{
-            logger.info("Product service | Get Product by ID | Got product details");
-            return response.data;
-        })
-        .catch((error)=>{
-            switch(error.status){
-                case 400:
-                    logger.error("Product service | Get Product by ID | Bad request");
-                    throw new BadRequestException();
-                case 404:
+        return new Promise((resolve, reject) => {
+            productApi.request({
+                url:`/${productId}`,
+                method:httpMethods.GET,
+            })
+            .then((response)=>{
+                logger.info("Product service | Get Product by ID | Got product details");
+                resolve(response.data);
+            })
+            .catch((error)=>{
+                switch(error.status){
+                    case 400:
+                        logger.error("Product service | Get Product by ID | Bad request");
+                        reject(new BadRequestException());
+                        break;
+                    case 404:
                         logger.error("Product service | Get Product by ID | Product not found");
-                        throw new NotFoundException()
-                default:
-                    logger.error("Product service | Get Product by ID | ",error);
-                    throw new BffError("error getting product "+productId);
-            }
+                        reject(new NotFoundException());
+                        break;
+                    default:
+                        logger.error("Product service | Get Product by ID | ",error);
+                        reject(new BffError("error getting product "+productId));
+                }
+            });
         });
     }
 
     async removeProduct(productId){
-        return await productApi.request({
-            url:`/${productId}`,
-            method:httpMethods.DELETE,
-        })
-        .then((response)=>{
-            logger.info("Product service | Delete Products | Successfully deleted");
-            return response.data;
-        })
-        .catch((error)=>{
-            switch(error.status){
-                case 400:
-                    logger.error("Product service | Delete Products | Bad request");
-                    throw new BadRequestException();
-                case 404:
+        return new Promise((resolve, reject) => {
+            productApi.request({
+                url:`/${productId}`,
+                method:httpMethods.DELETE,
+            })
+            .then((response)=>{
+                logger.info("Product service | Delete Products | Successfully deleted");
+                resolve(response.data);
+            })
+            .catch((error)=>{
+                switch(error.status){
+                    case 400:
+                        logger.error("Product service | Delete Products | Bad request");
+                        reject(new BadRequestException());
+                    case 404:
                         logger.error("Product service | Delete Products | Product not found");
-                        throw new NotFoundException()
-                default:
-                    logger.error("Product service | Delete Products | ",error);
-                    throw new BffError("error deleting product "+productId);
-            }
+                        reject(new NotFoundException());
+                    default:
+                        logger.error("Product service | Delete Products | ",error);
+                        reject(new BffError("error deleting product "+productId));
+                }
+            });
         });
     }
 
-    async updateProduct(product){
-        productId = product.productId
-        return await productApi.request({
-            url:`/${productId}`,
-            method:httpMethods.PATCH,
-            data:product
-        })
-        .then((response)=>{
-            logger.info("Product service | Update Products | Successfully deleted");
-            return response.data;
-        })
-        .catch((error)=>{
-            switch(error.status){
-                case 400:
-                    logger.error("Product service | Update Products | Bad request");
-                    throw new BadRequestException();
-                case 404:
+    async updateProduct(productId, product){
+        return new Promise((resolve, reject) => {
+            productApi.request({
+                url:`/${productId}`,
+                method:httpMethods.PUT,
+                data:product
+            })
+            .then((response)=>{
+                logger.info("Product service | Update Products | Successfully updated");
+                resolve(response.data);
+            })
+            .catch((error)=>{
+                switch(error.status){
+                    case 400:
+                        logger.error("Product service | Update Products | Bad request");
+                        reject(new BadRequestException());
+                        break;
+                    case 404:
                         logger.error("Product service | Update Products | Product not found");
-                        throw new NotFoundException()
-                default:
-                    logger.error("Product service | Update Products | ",error);
-                    throw new BffError("error updating product "+productId);
-            }
-        });
+                        reject(new NotFoundException());
+                        break;
+                    default:
+                        logger.error("Product service | Update Products | ",error);
+                        reject(new BffError("error updating product "+productId));
+                }
+            });
+        })
     }
 
     async getProductCategories(){
-        return await productApi.request({
-            url:`/categories`,
-            method:httpMethods.GET,
-        })
-        .then((response) => {
-            logger.info("Product service | Get Product Categories | Recieved data");
-            return response.data;
-        })
-        .catch((error)=>{
-            logger.error("Product service | Get Product Categories | ",error);
-            throw new BffError("error getting category list");
+        return new Promise((resolve, reject) => {
+            productApi.request({
+                url:`/categories`,
+                method:httpMethods.GET,
+            })
+            .then((response) => {
+                logger.info("Product service | Get Product Categories | Recieved data");
+                resolve(response.data);
+            })
+            .catch((error)=>{
+                logger.error("Product service | Get Product Categories | ",error);
+                reject(new BffError("error getting category list"));
+            });
         });
     }
 }

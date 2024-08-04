@@ -1,10 +1,12 @@
 import {CognitoUser , AuthenticationDetails , CognitoUserAttribute} from 'amazon-cognito-identity-js';
-import userPool from '../connectors/cognitoUserPoolConnector.js';
+import {AdminDeleteUserCommand, AdminConfirmSignUpCommand} from '@aws-sdk/client-cognito-identity-provider'
+import {userPool,cognitoClient} from '../connectors/cognitoConnector.js';
 import logger from '../config/logger.js';
 import BffError from '../exceptions/BffError.js';
+import config from '../config/conf.js';
 
 class AuthService {
-  async authenticateUser(username, password){  
+  authenticateUser(username, password){  
     const authenticationDetails = new AuthenticationDetails({
       Username: username,
       Password: password,
@@ -16,42 +18,59 @@ class AuthService {
     };
   
     const cognitoUser = new CognitoUser(userData);
-  
-    try {
-        return cognitoUser.authenticateUser(authenticationDetails, {
-            onSuccess: (result) => {
-              return result;
-            },
-            onFailure: (err) => {
-              throw err;
-            }
-        })
-    } catch (error) {
-        logger.error("Auth service | Authenticate user | ", error);
-        throw BffError("error when authenticating user")
-    }
+
+    return new Promise(async (resolve, reject) => {
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: (result) => {
+          logger.info("Cognito successfully authenticated user");
+          resolve(result);
+        },
+        onFailure: (error) => {
+          logger.error(error);
+          reject(new BffError("Cognito authentication failed."));
+        }
+      });
+    })
   };
 
-  async registerUser(username,password,role){
-    try {
-      const attributeList = [];
-  
-      const attributeUsername = new CognitoUserAttribute({Name:'preferred_username', Value:username});
-      // const attributeUserGroup = new CognitoUserAttribute({Name:'custom:group', Value:role});
-    
-      attributeList.push(attributeUsername);
-      userPool.signUp(username, password, attributeList, null, (err, result) => {
-            if (err) {
-                throw err;
-            }
-            const cognitoUser = result.user;
-            logger.info('user name is ' + cognitoUser.getUsername());
-            return cognitoUser;
-        });
-    } catch (error) {
-        logger.error("Auth service | Register user | ", error);
-        throw new BffError("error when registering user")
-    }
+  registerUser(username,password,role){
+    const attributeList = [
+      new CognitoUserAttribute({Name:'preferred_username', Value:username})
+    ];
+      
+    return new Promise((resolve,reject)=>{
+      userPool.signUp(username,password,attributeList,null, async (err, user) => {
+        if (err) {
+          logger.error(err.message);
+          reject(new BffError("Cognito registration failed"));
+        } else {
+          logger.info("Cognito registration successful");
+          const params = {
+            UserPoolId: config.userPoolId,
+            Username: username,
+          }
+          await cognitoClient.send(new AdminConfirmSignUpCommand(params))
+          resolve(user);
+        }
+      });
+    });
+  }
+
+  deleteUser(username){
+    return new Promise(async (resolve, reject) => {
+      const params = {
+        UserPoolId: config.userPoolId,
+        Username: username,
+      }
+      try {
+        const response = await cognitoClient.send(new AdminDeleteUserCommand(params));
+        logger.info("Cognito successfully deleted user");
+        resolve(response);
+      } catch (error) {
+        logger.error(error);
+        reject(new BffError("Cognito delete user failed"));
+      }
+    })
   }
 }
 

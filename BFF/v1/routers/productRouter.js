@@ -13,7 +13,7 @@ class ProductRouter{
     this.router.post('/', this.controller.createProduct);
     this.router.get('/:id', this.controller.getProductById);
     this.router.delete('/:id', this.controller.deleteProductById);
-    this.router.patch('/:id', this.controller.updateProduct);
+    this.router.put('/:id', this.controller.updateProduct);
     this.router.get('/categories',this.controller.getProductCategories);
     }
 
