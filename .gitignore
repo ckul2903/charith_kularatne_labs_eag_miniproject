@@ -1,3 +1,4 @@
 .idea
 .vscode
 /compose.yaml
+/Frontends/auth/node_modules
