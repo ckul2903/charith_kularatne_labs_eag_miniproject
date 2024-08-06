@@ -1,5 +1,4 @@
-import dotenv from 'dotenv'
-import axios from "axios";
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -10,12 +9,9 @@ const config={
     awsAccessKey: process.env.AWS_ACCESS_KEY_ID,
     awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY,
     awsSessionToken: process.env.AWS_SESSION_TOKEN,
+    awsRegion: process.env.AWS_REGION || 'us-east-1',
     userPoolId: process.env.USER_POOL_ID,
     clientId: process.env.CLIENT_ID,
 }
-
-const productApi = axios.create({
-    baseURL: config.baseUrlPrefix+"/products"
-});
 
 export default config;
