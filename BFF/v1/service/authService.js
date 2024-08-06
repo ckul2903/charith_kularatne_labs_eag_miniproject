@@ -1,12 +1,12 @@
 import {CognitoUser , AuthenticationDetails , CognitoUserAttribute} from 'amazon-cognito-identity-js';
-import {AdminDeleteUserCommand, AdminConfirmSignUpCommand} from '@aws-sdk/client-cognito-identity-provider'
+import {AdminDeleteUserCommand, AdminCreateUserCommand,AdminConfirmSignUpCommand} from '@aws-sdk/client-cognito-identity-provider'
 import {userPool,cognitoClient} from '../connectors/cognitoConnector.js';
 import logger from '../config/logger.js';
 import BffError from '../exceptions/BffError.js';
 import config from '../config/conf.js';
 
 class AuthService {
-  authenticateUser(username, password){  
+  authenticateUser(username, password){
     const authenticationDetails = new AuthenticationDetails({
       Username: username,
       Password: password,
@@ -35,10 +35,11 @@ class AuthService {
 
   registerUser(username,password,role){
     const attributeList = [
-      new CognitoUserAttribute({Name:'preferred_username', Value:username})
+      new CognitoUserAttribute({Name:'preferred_username', Value:username}),
+      new CognitoUserAttribute({Name:'custom:group', Value:role})
     ];
       
-    return new Promise((resolve,reject)=>{
+    return new Promise(async (resolve,reject)=>{
       userPool.signUp(username,password,attributeList,null, async (err, user) => {
         if (err) {
           logger.error(err.message);

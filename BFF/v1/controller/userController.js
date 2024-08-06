@@ -1,7 +1,7 @@
 import logger from '../config/logger.js';
 import UserService from '../service/userService.js';
 import AuthService from '../service/authService.js';
-import Roles from '../config/userRoles.js'
+import {roles} from '../config/constants.js'
 import BffError from '../exceptions/BffError.js';
 
 const userService = new UserService();
@@ -22,7 +22,7 @@ class UserController{
         const {username,password} = req.body;
         try{
             logger.info("User Controller | Create user | Registering user in cognito. name: ",username)
-            const cognitoUser = await authService.registerUser(username,password, Roles.admin);
+            const cognitoUser = await authService.registerUser(username,password, roles.admin);
             
             if(cognitoUser){
                 logger.cognitoUser

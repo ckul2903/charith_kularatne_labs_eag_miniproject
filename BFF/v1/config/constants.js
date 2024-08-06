@@ -6,4 +6,10 @@ const httpMethods = {
     PATCH : "patch",
 };
 
-export {httpMethods};
+const roles = {
+    admin : 'ADMIN',
+    customer : 'CUSTOMER',
+    any : 'ANY'
+}
+
+export {httpMethods, roles};
