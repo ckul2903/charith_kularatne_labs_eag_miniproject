@@ -25,23 +25,23 @@ public class UserServiceImpl implements UserService {
             log.info("PRODUCT SERVICE | Listing all users");
             return userRepository.findAll();
         } catch (Exception exception){
-            log.error("PRODUCT SERVICE | Failed with exception : {}", exception.getMessage());
+            log.error("USER SERVICE | Failed with exception : {}", exception.getMessage());
             throw new UserException();
         }
     }
 
     @Override
     public UserEntity getUserById(String userId) {
-        log.info("PRODUCT SERVICE | Getting user {}",userId);
+        log.info("USER SERVICE | Getting user {}",userId);
         try {
             return userRepository.findById(userId).orElseThrow(
                     ()-> new UserNotFoundException(userId)
             );
         }catch (UserNotFoundException userNotFoundException){
-            log.error("PRODUCT SERVICE | PRODUCT NOT FOUND");
+            log.error("USER SERVICE | USER NOT FOUND");
             throw userNotFoundException;
         }catch (Exception exception){
-            log.error("PRODUCT SERVICE | Query failed | User ID:{} failed with exception {}",userId,exception.getMessage());
+            log.error("USER SERVICE | Query failed | User ID:{} failed with exception {}",userId,exception.getMessage());
             throw new UserException();
         }
     }
@@ -50,17 +50,17 @@ public class UserServiceImpl implements UserService {
     public UserEntity addNewUser(UserEntity user) {
         try {
             UserEntity newUser = userRepository.save(user);
-            log.info("PRODUCT SERVICE | Created user {}",user.getUserId());
+            log.info("USER SERVICE | Created user {}",user.getUserId());
             return newUser;
         } catch (Exception exception){
-            log.error("PRODUCT SERVICE | Create failed | User ID:{} failed with exception {}",user.getUserId(),exception.getMessage());
+            log.error("USER SERVICE | Create failed | User ID:{} failed with exception {}",user.getUserId(),exception.getMessage());
             throw new UserException();
         }
     }
 
     @Override
     public void removeUser(String userId) {
-        log.info("PRODUCT SERVICE | Deleting user {}",userId);
+        log.info("USER SERVICE | Deleting user {}",userId);
         try{
             userRepository.deleteById(userId);
         } catch (Exception exception){
@@ -71,14 +71,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity updateUserDetails(UserEntity user) {
-        log.info("PRODUCT SERVICE | Updating user {}",user.getUserId());
+        log.info("USER SERVICE | Updating user {}",user.getUserId());
         try {
                 return userRepository.save(user);
         }catch (UserNotFoundException userNotFoundException){
-            log.error("PRODUCT SERVICE | User not found");
+            log.error("USER SERVICE | User not found");
             throw userNotFoundException;
         }catch (Exception exception){
-            log.error("PRODUCT SERVICE | Update failed | User ID:{} failed with exception {}",user.getUserId(),exception.getMessage());
+            log.error("USER SERVICE | Update failed | User ID:{} failed with exception {}",user.getUserId(),exception.getMessage());
             throw new UserException();
         }
     }

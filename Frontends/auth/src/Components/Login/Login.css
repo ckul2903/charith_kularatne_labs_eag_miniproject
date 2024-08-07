@@ -1,0 +1,100 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding-bottom: 30px;
+}
+
+.text{
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 48px;
+    font-weight: 600;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.underline{
+    background-color: rgb(255, 255, 255);
+    width: 100px;
+    height: 6px;
+    border-radius: 10px;
+    margin: 10px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.loginform{
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 10px 60px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.inputs{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3px;
+    background: #eee;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.input img{
+    height: 30px;
+}
+
+.input input{
+    background: #ccc;
+    width: 80%;
+    padding: 9px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+}
+
+.input span{
+    color: #444;
+    padding-bottom: 10px;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.submit_container{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px auto;
+}
+
+.submit{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 50px;
+    color: #fff;
+    background:#0081C6;
+    border: none;
+    border-radius: 100px;
+    font-weight: 700;
+    cursor: pointer;
+}
