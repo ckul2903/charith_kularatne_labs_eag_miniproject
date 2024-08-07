@@ -1,3 +1,5 @@
 .idea
 .vscode
 /compose.yaml
+BFF/.env
+BFF/node_modules
