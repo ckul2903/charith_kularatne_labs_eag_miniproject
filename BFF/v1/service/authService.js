@@ -27,7 +27,7 @@ class AuthService {
         },
         onFailure: (error) => {
           logger.error(error);
-          reject(new BffError("Cognito authentication failed."));
+          reject(new BffError("Cognito authentication failed.",403));
         }
       });
     })

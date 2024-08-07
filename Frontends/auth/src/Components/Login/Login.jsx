@@ -1,22 +1,11 @@
 import React, { useState } from "react";  
 import './Login.css';
-import axios from 'axios';
+import { loginHandler,registerHandler } from "./utils";
 
 import login_icon from '../Assets/login.png';
 import password_icon from '../Assets/password.png';
 
 function LoginComponent(){
-    const [user,setUser] = useState(null);
-
-    const loginHandler = () =>{
-        const username = document.getElementById("username_field").value
-        window.alert("Login " + username);
-    }
-
-    const registerHandler = (user) =>{
-        window.alert("Register" + user);
-    }
-
     return (
         <div className="container">
             <div className="header">
@@ -33,7 +22,7 @@ function LoginComponent(){
                     <div className="input">
                         <img src={password_icon} alt=""/>
                         <span>Password</span>
-                        <input type="password"/>
+                        <input type="password" id="password_field"/>
                     </div>
                 </div>
                 <div className="submit_container">

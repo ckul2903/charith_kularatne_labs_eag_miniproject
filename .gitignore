@@ -4,3 +4,4 @@
 BFF/.env
 BFF/node_modules
 /Frontends/auth/node_modules
+/Frontends/auth/.env
